@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using api.Dtos.User;
 using api.Interfaces;
 using api.Models;
 
@@ -76,11 +77,11 @@ namespace api.Services
             return _userRepository.GetUserByUsernameAsync(username);
         }
 
-        public bool UpdateUserAsync(User user)
+        public bool UpdateUserAsync(int id, UpdateUserRequestDto userDto)
         {
             try
             {
-                _userRepository.UpdateUserAsync(user);
+                _userRepository.UpdateUserAsync(id, userDto);
                 return true;
             }
             catch (Exception ex)

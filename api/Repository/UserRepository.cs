@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using api.Data;
+using api.Dtos.User;
 using api.Interfaces;
 using api.Models;
 using Microsoft.EntityFrameworkCore;
@@ -54,20 +55,20 @@ namespace api.Repository
             return await _context.Users.FirstOrDefaultAsync(u => u.Username == username);
         }
 
-        public async Task<User?> UpdateUserAsync(User user)
+        public async Task<User?> UpdateUserAsync(int id, UpdateUserRequestDto userDto)
         {
-            var existingUser = await _context.Users.FirstOrDefaultAsync(u => u.Id == user.Id);
+            var existingUser = await _context.Users.FirstOrDefaultAsync(u => u.Id == id);
             if (existingUser == null)
             {
                 return null;
             }
-            existingUser.Username = user.Username;
-            existingUser.Name = user.Name;
-            existingUser.Password = user.Password;
-            existingUser.Role = user.Role;
-            existingUser.DepartmentId = user.DepartmentId;
-            existingUser.AvailableVacationDays = user.AvailableVacationDays;
-            existingUser.AvailableSickDays = user.AvailableSickDays;
+            existingUser.Username = userDto.Username;
+            existingUser.Password = userDto.Password;
+            existingUser.Name = userDto.Name;
+            existingUser.Role = userDto.Role;
+            existingUser.AvailableVacationDays = userDto.AvailableVacationDays;
+            existingUser.AvailableSickDays = userDto.AvailableSickDays;
+            existingUser.DepartmentId = userDto.DepartmentId;
 
             await _context.SaveChangesAsync();
             return existingUser;
