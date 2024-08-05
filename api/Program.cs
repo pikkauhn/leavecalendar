@@ -1,6 +1,7 @@
 using api.Data;
 using api.Interfaces;
 using api.Repository;
+using api.Services;
 using Microsoft.EntityFrameworkCore;
 using MySqlConnector;
 
@@ -15,7 +16,7 @@ builder.Services.AddCors(options =>
     options.AddPolicy("MyCorsPolicy",
     builder =>
     {
-        builder.WithOrigins("http://localhost:3000")
+        builder.WithOrigins("http://localhost:3000", "http://localhost:5031")
         .AllowAnyMethod()
         .AllowAnyHeader();
     });
@@ -29,6 +30,9 @@ builder.Services.AddDbContext<ApplicationDBContext>(options =>
 });
 
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IDepartmentService, DepartmentService>();
+builder.Services.AddScoped<IDepartmentRepository, DepartmentRepository>();
 
 var app = builder.Build();
 

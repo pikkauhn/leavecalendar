@@ -15,6 +15,6 @@ namespace api.Models
         public required string Role { get; set; }
         public int AvailableVacationDays { get; set; }
         public int AvailableSickDays { get; set; }
-        public int DepartmentId { get; set; }
+        public required int DepartmentId { get; set; }        
     }
 }

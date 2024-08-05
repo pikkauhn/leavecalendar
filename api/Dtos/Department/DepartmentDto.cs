@@ -3,12 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace api.Models
+namespace api.Dtos.Department
 {
-    public class Department
+    public class DepartmentDto
     {
         public int Id { get; set; }
         public required string Name { get; set; }
-        public ICollection<User>? Users { get; set; }
     }
 }
