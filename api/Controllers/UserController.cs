@@ -87,7 +87,7 @@ namespace api.Controllers
 
         }
 
-        [Route("api/Verify")]
+        [Route("Verify")]
         [HttpPost]
         public async Task<IActionResult> GetUserByUsername(string username, string password)
         {
