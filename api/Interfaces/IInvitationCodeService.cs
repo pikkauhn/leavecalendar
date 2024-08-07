@@ -22,7 +22,7 @@ namespace api.Interfaces
         Task<InvitationCode?> GetInvitationCodeByIdAsync(int id);
         Task<InvitationCode?> GetInvitationCodeByCodeAsync(string code);
         Task<InvitationCode> CreateInvitationCodeAsync(InvitationCode invitationCode);
-        Task<InvitationCode?> UpdateInvitationCodeAsync(int id, InvitationCode invitationCode);
+        Task<InvitationCode?> UpdateInvitationCodeAsync(int id, InvitationCodeDto invitationCodeDto);
         Task<InvitationCode?> DeleteInvitationCodeAsync(int id);
     }
 }

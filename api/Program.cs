@@ -33,6 +33,8 @@ builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IDepartmentService, DepartmentService>();
 builder.Services.AddScoped<IDepartmentRepository, DepartmentRepository>();
+builder.Services.AddScoped<IInvitationCodeService, InvitationCodeService>();
+builder.Services.AddScoped<IInvitationCodeRepository, InvitationCodeRepository>();
 
 var app = builder.Build();
 

@@ -6,6 +6,7 @@ using api.Dtos.InvitationCode;
 using api.Interfaces;
 using api.Mappers;
 using api.Models;
+using api.Security;
 
 namespace api.Services
 {
@@ -19,8 +20,9 @@ namespace api.Services
 
         public async Task<InvitationCodeDto> CreateInvitationCodeAsync(InvitationCodeDto invitationCodeDto)
         {
+            invitationCodeDto.Code = CodeGenerator.GenerateRandomCode(10);
             var invitationCode = invitationCodeDto.ToInvitationCode();
-            // Add business logic here, e.g., code generation, validation
+            
             var createdInvitationCode = await _invitationCodeRepository.CreateInvitationCodeAsync(invitationCode);
             return createdInvitationCode.ToInvitationCodeDto();
         }
@@ -64,7 +66,7 @@ namespace api.Services
                 return null;
             }
 
-            var updatedInvitationCode = await _invitationCodeRepository.UpdateInvitationCodeAsync(id, invitationCode);
+            var updatedInvitationCode = await _invitationCodeRepository.UpdateInvitationCodeAsync(id, invitationCodeDto);
             return updatedInvitationCode?.ToInvitationCodeDto();
         }
     }

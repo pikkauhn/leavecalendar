@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using api.Data;
 using api.Dtos.Department;
+using api.Dtos.InvitationCode;
 using api.Interfaces;
 using api.Models;
 using Microsoft.EntityFrameworkCore;
@@ -16,7 +17,7 @@ namespace api.Repository
 
         public InvitationCodeRepository(ApplicationDBContext context)
         {
-            _context = context;            
+            _context = context;
         }
 
         public async Task<InvitationCode> CreateInvitationCodeAsync(InvitationCode invitationCode)
@@ -54,17 +55,20 @@ namespace api.Repository
             return await _context.InvitationCodes.FindAsync(id);
         }
 
-        public async Task<InvitationCode?> UpdateInvitationCodeAsync(int id, InvitationCode invitationCode)
+        public async Task<InvitationCode?> UpdateInvitationCodeAsync(int id, InvitationCodeDto invitationCodeDto)
         {
-            var existingInvitationCode = await _context.InvitationCodes.FindAsync(id);
+            var existingInvitationCode = await _context.InvitationCodes
+                .FirstOrDefaultAsync(ic => ic.Id == id);
+
             if (existingInvitationCode == null)
             {
                 return null;
             }
-            existingInvitationCode.Code = invitationCode.Code;
-            existingInvitationCode.Used = invitationCode.Used;
-            existingInvitationCode.IssuedBy = invitationCode.IssuedBy;
-            existingInvitationCode.IssuedAt = invitationCode.IssuedAt;
+
+            existingInvitationCode.Code = invitationCodeDto.Code;
+            existingInvitationCode.Used = invitationCodeDto.Used;
+            existingInvitationCode.IssuedBy = invitationCodeDto.IssuedBy;
+            existingInvitationCode.IssuedAt = invitationCodeDto.IssuedAt;
 
             await _context.SaveChangesAsync();
             return existingInvitationCode;

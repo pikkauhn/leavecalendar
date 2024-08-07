@@ -12,6 +12,6 @@ namespace api.Models
     public bool Used { get; set; }
     public int IssuedBy { get; set; }
     public DateTime IssuedAt { get; set; }
-    public User? IssuedByNavigation { get; set; }
+    // public User? IssuedByNavigation { get; set; }
   }
 }
