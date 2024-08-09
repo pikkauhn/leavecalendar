@@ -9,20 +9,18 @@ namespace api.Interfaces
 {
     public interface ILeaveRequestService
     {
-        Task<IEnumerable<LeaveRequest>> GetAllLeaveRequestsAsync();
-        Task<LeaveRequest?> GetLeaveRequestByIdAsync(int id);
-        Task<LeaveRequest> CreateLeaveRequestAsync(LeaveRequestDto leaveRequestDto);
+        Task<List<LeaveRequestDto>> GetAllLeaveRequestsAsync();
+        Task<LeaveRequestDto?> GetLeaveRequestByIdAsync(int id);
+        Task<LeaveRequestDto> CreateLeaveRequestAsync(LeaveRequestDto leaveRequestDto);
         Task<bool> UpdateLeaveRequestAsync(int id, LeaveRequestDto updatedLeaveRequest);
         Task<bool> DeleteLeaveRequestAsync(int id);
-        Task<LeaveRequest?> ApproveLeaveRequestAsync(int leaveRequestId);
-        Task<LeaveRequest?> DenyLeaveRequestAsync(int leaveRequestId);
     }
 
     public interface ILeaveRequestRepository
     {
-        Task<IEnumerable<LeaveRequest>> GetAllLeaveRequestsAsync();
+        Task<List<LeaveRequest>> GetAllLeaveRequestsAsync();
         Task<LeaveRequest?> GetLeaveRequestByIdAsync(int id);
-        Task<LeaveRequest> AddLeaveRequestAsync(LeaveRequest leaveRequest);
+        Task<LeaveRequest> CreateLeaveRequestAsync(LeaveRequest leaveRequest);
         Task<bool> UpdateLeaveRequestAsync(LeaveRequest leaveRequest);
         Task<bool> DeleteLeaveRequestAsync(LeaveRequest leaveRequest);
     }

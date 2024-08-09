@@ -58,7 +58,7 @@ namespace api.Repository
             {
                 return null;
             }
-            existingDepartment.Name = department.Name;
+            _context.Entry(existingDepartment).CurrentValues.SetValues(department);
             await _context.SaveChangesAsync();
             return existingDepartment;
         }

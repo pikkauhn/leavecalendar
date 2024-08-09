@@ -51,7 +51,7 @@ namespace api.Repository
         }
 
         public async Task<InvitationCode?> GetInvitationCodeByIdAsync(int id)
-        {
+        {            
             return await _context.InvitationCodes.FindAsync(id);
         }
 
@@ -65,11 +65,7 @@ namespace api.Repository
                 return null;
             }
 
-            existingInvitationCode.Code = invitationCodeDto.Code;
-            existingInvitationCode.Used = invitationCodeDto.Used;
-            existingInvitationCode.IssuedBy = invitationCodeDto.IssuedBy;
-            existingInvitationCode.IssuedAt = invitationCodeDto.IssuedAt;
-
+            _context.Entry(existingInvitationCode).CurrentValues.SetValues(invitationCodeDto);
             await _context.SaveChangesAsync();
             return existingInvitationCode;
         }

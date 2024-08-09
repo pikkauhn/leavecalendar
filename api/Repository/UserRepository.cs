@@ -62,14 +62,7 @@ namespace api.Repository
             {
                 return null;
             }
-            existingUser.Username = userDto.Username;
-            existingUser.Password = userDto.Password;
-            existingUser.Name = userDto.Name;
-            existingUser.Role = userDto.Role;
-            existingUser.AvailableVacationDays = userDto.AvailableVacationDays;
-            existingUser.AvailableSickDays = userDto.AvailableSickDays;
-            existingUser.DepartmentId = userDto.DepartmentId;
-
+            _context.Entry(existingUser).CurrentValues.SetValues(userDto);
             await _context.SaveChangesAsync();
             return existingUser;
         }

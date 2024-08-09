@@ -12,8 +12,8 @@ namespace api.Models
         public required string Reason { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
-        public required Enum Status { get; set; }
-        public required Enum LeaveType { get; set; }
+        public required int Status { get; set; }
+        public required int LeaveType { get; set; }
         public string? Comment { get; set; }
         // public User User { get; set; }
     }
