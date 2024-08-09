@@ -42,8 +42,11 @@ namespace api.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(int id, LeaveRequestDto updatedLeaveRequest)
         {
-            await _leaveRequestService.UpdateLeaveRequestAsync(id, updatedLeaveRequest);
-            
+            var existingLeaveRequest = await _leaveRequestService.UpdateLeaveRequestAsync(id, updatedLeaveRequest);
+            if (existingLeaveRequest == null)
+            {
+                return NotFound();
+            }            
             return NoContent();
         }
         [HttpDelete]

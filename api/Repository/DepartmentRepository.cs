@@ -6,6 +6,7 @@ using api.Data;
 using api.Dtos.Department;
 using api.Interfaces;
 using api.Models;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
 
 namespace api.Repository
@@ -43,7 +44,12 @@ namespace api.Repository
 
         public async Task<Department?> GetDepartmentByIdAsync(int id)
         {
-            return await _context.Departments.FindAsync(id);
+            var existingDepartment = await _context.Departments.FindAsync(id);
+            if (existingDepartment == null)
+            {
+                return null;
+            }
+            return existingDepartment;
         }
 
         public async Task<Department?> GetDepartmentByNameAsync(string name)

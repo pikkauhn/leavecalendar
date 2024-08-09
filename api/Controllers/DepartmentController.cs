@@ -33,7 +33,7 @@ namespace api.Controllers
             {
                 return NotFound();
             }
-            return Ok(department.ToDepartmentDto());
+            return Ok(department);
         }
 
         [HttpPost]
