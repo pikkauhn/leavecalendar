@@ -23,6 +23,38 @@ namespace api.Controllers
             var leaveRequests = await _leaveRequestService.GetAllLeaveRequestsAsync();
             return Ok(leaveRequests);
         }
-
+        [HttpGet("{id}")]
+        public async Task<ActionResult<LeaveRequestDto>> GetById(int id)
+        {
+            var leaveRequest = await _leaveRequestService.GetLeaveRequestByIdAsync(id);
+            if (leaveRequest == null)
+            {
+                return NotFound();
+            }
+            return Ok(leaveRequest);
+        }
+        [HttpPost]
+        public async Task<ActionResult<LeaveRequestDto>> Create(LeaveRequestDto leaveRequestDto)
+        {
+            var createdLeaveRequest = await _leaveRequestService.CreateLeaveRequestAsync(leaveRequestDto);
+            return CreatedAtAction("GetById", new { id = createdLeaveRequest.UserId }, createdLeaveRequest);
+        }
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update(int id, LeaveRequestDto updatedLeaveRequest)
+        {
+            await _leaveRequestService.UpdateLeaveRequestAsync(id, updatedLeaveRequest);
+            
+            return NoContent();
+        }
+        [HttpDelete]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var success = await _leaveRequestService.DeleteLeaveRequestAsync(id);       
+            if (!success)
+            {
+                return NotFound();
+            }
+            return NoContent();
+        }
     }
 }

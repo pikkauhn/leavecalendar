@@ -13,6 +13,7 @@ namespace api.Mappers
         {
             return new LeaveRequestDto
             {
+                Id = leaveRequest.Id,
                 UserId = leaveRequest.UserId,
                 Reason = leaveRequest.Reason,
                 StartDate = leaveRequest.StartDate,
@@ -26,6 +27,7 @@ namespace api.Mappers
         {
             return new LeaveRequest
             {
+                Id = leaveRequestDto.Id,
                 UserId = leaveRequestDto.UserId,
                 Reason = leaveRequestDto.Reason,
                 StartDate = leaveRequestDto.StartDate,

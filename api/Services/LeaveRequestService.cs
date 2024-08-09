@@ -36,25 +36,15 @@ namespace api.Services
             leaveRequest = await _leaveRequestRepository.CreateLeaveRequestAsync(leaveRequest);
             return leaveRequest.ToLeaveRequestDto();
         }
-        public async Task<bool> UpdateLeaveRequestAsync(int id, LeaveRequestDto leaveRequestDto)
+        public async Task<LeaveRequest?> UpdateLeaveRequestAsync(int id, LeaveRequestDto updatedLeaveRequest)
         {
-            var leaveRequest = await _leaveRequestRepository.GetLeaveRequestByIdAsync(id);
-            if (leaveRequest == null)
-            {
-                return false;
-            }
-            await _leaveRequestRepository.UpdateLeaveRequestAsync(leaveRequest);
-            return true;
+            await _leaveRequestRepository.UpdateLeaveRequestAsync(updatedLeaveRequest.ToLeaveRequest());
+            return updatedLeaveRequest.ToLeaveRequest();
         }
         public async Task<bool> DeleteLeaveRequestAsync(int id)
         {
-            var leaveRequest = await _leaveRequestRepository.GetLeaveRequestByIdAsync(id);
-            if (leaveRequest == null)
-            {
-                return false;
-            }
-            await _leaveRequestRepository.DeleteLeaveRequestAsync(leaveRequest);
-            return true;
+            var leaveRequest = await _leaveRequestRepository.DeleteLeaveRequestAsync(id);
+            return leaveRequest != null;
         }
     }
 }

@@ -25,16 +25,16 @@ namespace api.Repository
             return leaveRequest;
         }
 
-        public async Task<bool> DeleteLeaveRequestAsync(LeaveRequest leaveRequest)
+        public async Task<LeaveRequest?> DeleteLeaveRequestAsync(int id)
         {
-            var existingLeaveRequest = await _context.LeaveRequests.FindAsync(leaveRequest);
+            var existingLeaveRequest = await _context.LeaveRequests.FindAsync(id);
             if (existingLeaveRequest == null)
             {
-                return false;
+                return null;
             }
-            _context.LeaveRequests.Remove(leaveRequest);
+            _context.LeaveRequests.Remove(existingLeaveRequest);
             await _context.SaveChangesAsync();
-            return true;
+            return existingLeaveRequest;
         }
 
         public async Task<List<LeaveRequest>> GetAllLeaveRequestsAsync()
@@ -48,17 +48,16 @@ namespace api.Repository
             return await _context.LeaveRequests.FindAsync(id);
         }
 
-        public async Task<bool> UpdateLeaveRequestAsync(LeaveRequest leaveRequest)
+        public async Task<LeaveRequest?> UpdateLeaveRequestAsync(LeaveRequest leaveRequest)
         {
             var existingLeaveRequest = await _context.LeaveRequests.FindAsync(leaveRequest.Id);
             if (existingLeaveRequest == null)
             {
-                return false;
+                return null;
             }
-
             _context.Entry(existingLeaveRequest).CurrentValues.SetValues(leaveRequest);
             await _context.SaveChangesAsync();
-            return true;
+            return leaveRequest;
         }
     }
 }
