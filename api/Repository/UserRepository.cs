@@ -2,11 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using api.Data;
 using api.Dtos.User;
 using api.Interfaces;
 using api.Models;
-using Microsoft.EntityFrameworkCore;
 
 namespace api.Repository
 {
@@ -21,50 +21,93 @@ namespace api.Repository
 
         public async Task<User> CreateUserAsync(User user)
         {
-            await _context.Users.AddAsync(user);
-            await _context.SaveChangesAsync();
-            return user;
+            try
+            {
+                await _context.Users.AddAsync(user);
+                await _context.SaveChangesAsync();
+                return user;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("An error occurred while creating the user: ", ex);
+            }
         }
 
         public async Task<User?> DeleteUserAsync(int id)
         {
-            var user = await _context.Users.FindAsync(id);
-            if (user != null)
+            try
             {
-                _context.Users.Remove(user);
-                await _context.SaveChangesAsync();
-                return user;
+                var user = await _context.Users.FindAsync(id);
+                if (user != null)
+                {
+                    _context.Users.Remove(user);
+                    await _context.SaveChangesAsync();
+                    return user;
+                }
+                else
+                {
+                    return null;
+                }
             }
-            else {
-                return null;
+            catch (Exception ex)
+            {
+                throw new Exception($"An error occurred while deleting user with id: {id}", ex);
             }
         }
 
         public async Task<List<User>> GetAllUsersAsync()
         {
-            return await _context.Users.ToListAsync();
+            try
+            {
+                return await _context.Users.ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("An error occurred while retrieving all users: ", ex);
+            }
         }
 
         public async Task<User?> GetUserByIdAsync(int id)
         {
-            return await _context.Users.FindAsync(id);
+            try
+            {
+                return await _context.Users.FindAsync(id);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"An error occurred while retrieving user with id: {id}", ex);
+            }
         }
 
         public async Task<User?> GetUserByUsernameAsync(string username)
         {
-            return await _context.Users.FirstOrDefaultAsync(u => u.Username == username);
+            try
+            {
+                return await _context.Users.FirstOrDefaultAsync(u => u.Username == username);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"An error occurred while retrieving user with username: {username}", ex);
+            }
         }
 
         public async Task<User?> UpdateUserAsync(int id, UpdateUserRequestDto userDto)
         {
-            var existingUser = await _context.Users.FirstOrDefaultAsync(u => u.Id == id);
-            if (existingUser == null)
+            try
             {
-                return null;
+                var existingUser = await _context.Users.FirstOrDefaultAsync(u => u.Id == id);
+                if (existingUser == null)
+                {
+                    return null;
+                }
+                _context.Entry(existingUser).CurrentValues.SetValues(userDto);
+                await _context.SaveChangesAsync();
+                return existingUser;
             }
-            _context.Entry(existingUser).CurrentValues.SetValues(userDto);
-            await _context.SaveChangesAsync();
-            return existingUser;
+            catch (Exception ex)
+            {
+                throw new Exception($"An error occurred while updating user with id: {id}", ex);
+            }
         }
     }
 }

@@ -20,53 +20,95 @@ namespace api.Repository
         }
         public async Task<Department> CreateDepartmentAsync(Department department)
         {
-            _context.Departments.Add(department);
-            await _context.SaveChangesAsync();
-            return department;
+            try
+            {
+                _context.Departments.Add(department);
+                await _context.SaveChangesAsync();
+                return department;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("An error occurred while creating a department", ex);
+            }
         }
 
         public async Task<Department?> DeleteDepartmentAsync(int id)
         {
-            var existingDepartment = await _context.Departments.FindAsync(id);
-            if (existingDepartment == null)
+            try
             {
-                return null;
+                var existingDepartment = await _context.Departments.FindAsync(id);
+                if (existingDepartment == null)
+                {
+                    return null;
+                }
+                _context.Departments.Remove(existingDepartment);
+                await _context.SaveChangesAsync();
+                return existingDepartment;
             }
-            _context.Departments.Remove(existingDepartment);
-            await _context.SaveChangesAsync();
-            return existingDepartment;
+            catch (Exception ex)
+            {
+                throw new Exception($"An error occurred while deleting a department with id: {id}", ex);
+            }
         }
 
         public async Task<List<Department>> GetAllDepartmentsAsync()
         {
-            return await _context.Departments.ToListAsync();
+            try
+            {
+                return await _context.Departments.ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("An error occurred while retrieving all departments", ex);
+            }
         }
 
         public async Task<Department?> GetDepartmentByIdAsync(int id)
         {
-            var existingDepartment = await _context.Departments.FindAsync(id);
-            if (existingDepartment == null)
+            try
             {
-                return null;
+                var existingDepartment = await _context.Departments.FindAsync(id);
+                if (existingDepartment == null)
+                {
+                    return null;
+                }
+                return existingDepartment;
             }
-            return existingDepartment;
+            catch (Exception ex)
+            {
+                throw new Exception($"An error occurred while retrieving a department by id: {id}", ex);
+            }
         }
 
         public async Task<Department?> GetDepartmentByNameAsync(string name)
         {
-            return await _context.Departments.FirstOrDefaultAsync(d => d.Name == name);
+            try
+            {
+                return await _context.Departments.FirstOrDefaultAsync(d => d.Name == name);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"An error occurred while retrieving a department by name: {name}", ex);
+            }
         }
 
         public async Task<Department?> UpdateDepartmentAsync(int id, Department department)
         {
-            var existingDepartment = await _context.Departments.FindAsync(id);
-            if (existingDepartment == null)
+            try
             {
-                return null;
+                var existingDepartment = await _context.Departments.FindAsync(id);
+                if (existingDepartment == null)
+                {
+                    return null;
+                }
+                _context.Entry(existingDepartment).CurrentValues.SetValues(department);
+                await _context.SaveChangesAsync();
+                return existingDepartment;
             }
-            _context.Entry(existingDepartment).CurrentValues.SetValues(department);
-            await _context.SaveChangesAsync();
-            return existingDepartment;
+            catch (Exception ex)
+            {
+                throw new Exception($"An error occurred while updating a department with id: {id}", ex);
+            }
         }
     }
 }

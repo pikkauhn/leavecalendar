@@ -24,4 +24,9 @@ namespace api.Interfaces
         Task<LeaveRequest?> UpdateLeaveRequestAsync(LeaveRequest leaveRequest);
         Task<LeaveRequest?> DeleteLeaveRequestAsync(int id);
     }
+        public interface ILeaveRequestMapper
+    {
+        LeaveRequestDto MapToLeaveRequestDto(LeaveRequest leaveRequest);
+        LeaveRequest MapToLeaveRequest(LeaveRequestDto leaveRequestDto);
+    }
 }

@@ -1,8 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
 namespace api.Models
 {
   public class InvitationCode
@@ -12,6 +7,6 @@ namespace api.Models
     public bool Used { get; set; }
     public int IssuedBy { get; set; }
     public DateTime IssuedAt { get; set; }
-    // public User? IssuedByNavigation { get; set; }
+    public required User IssuedByNavigation { get; set; }
   }
 }

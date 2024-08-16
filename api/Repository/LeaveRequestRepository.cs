@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace api.Repository
 {
-    public class LeaveRequestRepository : ILeaveRequestRepository    
+    public class LeaveRequestRepository : ILeaveRequestRepository
     {
         private readonly ApplicationDBContext _context;
 
@@ -20,44 +20,78 @@ namespace api.Repository
         }
         public async Task<LeaveRequest> CreateLeaveRequestAsync(LeaveRequest leaveRequest)
         {
-            _context.LeaveRequests.Add(leaveRequest);
-            await _context.SaveChangesAsync();
-            return leaveRequest;
+            try
+            {
+                _context.LeaveRequests.Add(leaveRequest);
+                await _context.SaveChangesAsync();
+                return leaveRequest;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("An error occurred while creating a leave request.", ex);
+            }
         }
 
         public async Task<LeaveRequest?> DeleteLeaveRequestAsync(int id)
         {
-            var existingLeaveRequest = await _context.LeaveRequests.FindAsync(id);
-            if (existingLeaveRequest == null)
+            try
             {
-                return null;
+                var existingLeaveRequest = await _context.LeaveRequests.FindAsync(id);
+                if (existingLeaveRequest == null)
+                {
+                    return null;
+                }
+                _context.LeaveRequests.Remove(existingLeaveRequest);
+                await _context.SaveChangesAsync();
+                return existingLeaveRequest;
             }
-            _context.LeaveRequests.Remove(existingLeaveRequest);
-            await _context.SaveChangesAsync();
-            return existingLeaveRequest;
+            catch (Exception ex)
+            {
+                throw new Exception($"An error occurred while deleting a leave request with id: {id}", ex);
+            }
         }
 
         public async Task<List<LeaveRequest>> GetAllLeaveRequestsAsync()
         {
-            return await _context.LeaveRequests.ToListAsync();
-            
+            try
+            {
+                return await _context.LeaveRequests.ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("An error occurred while retrieving all leave requests.", ex);
+            }
         }
 
         public async Task<LeaveRequest?> GetLeaveRequestByIdAsync(int id)
         {
-            return await _context.LeaveRequests.FindAsync(id);
+            try
+            {
+                return await _context.LeaveRequests.FindAsync(id);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"An error occurred while retrieving a leave request with id: {id}", ex);
+            }
         }
 
         public async Task<LeaveRequest?> UpdateLeaveRequestAsync(LeaveRequest leaveRequest)
         {
-            var existingLeaveRequest = await _context.LeaveRequests.FindAsync(leaveRequest.Id);
-            if (existingLeaveRequest == null)
+            try
             {
-                return null;
+                var existingLeaveRequest = await _context.LeaveRequests.FindAsync(leaveRequest.Id);
+                if (existingLeaveRequest == null)
+                {
+                    return null;
+                }
+                _context.Entry(existingLeaveRequest).CurrentValues.SetValues(leaveRequest);
+                await _context.SaveChangesAsync();
+                return leaveRequest;
             }
-            _context.Entry(existingLeaveRequest).CurrentValues.SetValues(leaveRequest);
-            await _context.SaveChangesAsync();
-            return leaveRequest;
+            catch (Exception ex)
+            {
+                throw new Exception($"An error occurred while updating a leave request with id: {id}", ex);
+            }
         }
     }
 }

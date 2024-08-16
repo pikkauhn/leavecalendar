@@ -11,8 +11,6 @@ namespace api.Dtos.User
         public required string Username { get; set; }
         public required string Name { get; set; }
         public required string Role { get; set; }
-        public int AvailableVacationDays { get; set; }
-        public int AvailableSickDays { get; set; }
         public int DepartmentId { get; set; }
     }
 }
