@@ -2,6 +2,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using api.Dtos.Department;
+using api.Dtos.InvitationCode;
+using api.Dtos.LeaveBalance;
+using api.Dtos.LeaveRequest;
+using api.Dtos.LeaveType;
+using api.Dtos.User;
+using api.Models;
 using AutoMapper;
 
 namespace api.Mappers
@@ -10,7 +17,7 @@ namespace api.Mappers
     {
         public static IMapper Initialize()
         {
-            var config = new Mapperconfiguration(cfg => 
+            var config = new MapperConfiguration(cfg => 
             {
                 cfg.CreateMap<User, UserDto>();
                 cfg.CreateMap<UserDto, User>();
@@ -25,7 +32,7 @@ namespace api.Mappers
                 cfg.CreateMap<LeaveType, LeaveTypeDto>();
                 cfg.CreateMap<LeaveTypeDto, LeaveType>();
             });
-            return config.CreateMapper():
+            return config.CreateMapper();
         }
     }
 }

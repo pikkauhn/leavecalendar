@@ -1,8 +1,10 @@
+using System.Reflection.Metadata.Ecma335;
 using api.Data;
 using api.Dtos.User;
 using api.Interfaces;
-using api.Mappers;
+using api.Models;
 using api.Security;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 
 namespace api.Controllers
@@ -12,28 +14,31 @@ namespace api.Controllers
     public class UserController : ControllerBase
     {
         private readonly ApplicationDBContext _context;
-        private readonly IUserRepository _userRepo;
-        public UserController(ApplicationDBContext context, IUserRepository userRepo)
+        private readonly IUserService _userService;
+        private readonly IMapper _mapper;
+        public UserController(ApplicationDBContext context, IUserService userService, IMapper mapper)
         {
-            _userRepo = userRepo;
+            _userService = userService;
             _context = context;
+            _mapper = mapper;
 
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            var users = await _userRepo.GetAllUsersAsync();
+            var users = await _userService.GetAllUsersAsync();
 
-            var userDto = users.Select(s => s.ToUserDto());
+            var userDto = _mapper.Map<List<UserDto>>(users);
 
-            return Ok(users);
+            return Ok(userDto);
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById([FromRoute] int id)
         {
-            var user = await _userRepo.GetUserByIdAsync(id);
+            var user = await _userService.GetUserByIdAsync(id);
+            
             if (user == null)
             {
                 return NotFound();
@@ -43,42 +48,42 @@ namespace api.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] CreateUserRequestDto UserDto)
+        public async Task<IActionResult> Create([FromBody] CreateUserRequestDto userDto)
         {
-            var existingUser = await _userRepo.GetUserByUsernameAsync(UserDto.Username);
+            var existingUser = await _userService.GetUserByUsernameAsync(userDto.Username);
             if (existingUser != null)
             {
                 return BadRequest("User already exists.");
             }
 
-            var user = UserDto.ToUserFromCreateDTO();
-            user.Password = PasswordHasher.HashPassword(UserDto.Password);
-            await _userRepo.CreateUserAsync(user);
-            return CreatedAtAction(nameof(GetById), new { id = user.Id }, user.ToUserDto());
+            var user = _mapper.Map<User>(userDto);
+            user.Password = PasswordHasher.HashPassword(userDto.Password);
+            await _userService.CreateUserAsync(user);
+            return CreatedAtAction(nameof(GetById), new { id = user.Id }, user);
         }
 
         [HttpPut]
         [Route("{id}")]
         public async Task<IActionResult> Update([FromRoute] int id, [FromBody] UpdateUserRequestDto updateDto)
         {
-            var userModel = await _userRepo.UpdateUserAsync(id, updateDto);
-            if (userModel == null)
+            var userModel = await _userService.UpdateUserAsync(id, updateDto);
+            if (!userModel)
             {
                 return NotFound();
             }
 
             updateDto.Password = PasswordHasher.HashPassword(updateDto.Password);
-            await _userRepo.UpdateUserAsync(id, updateDto);
-            return Ok(userModel.ToUserDto());
+            await _userService.UpdateUserAsync(id, updateDto);
+            return Ok(_mapper.Map<User>(userModel));
         }
 
         [HttpDelete]
         [Route("{id}")]
         public async Task<IActionResult> Delete([FromRoute] int id)
         {
-            var stockModel = await _userRepo.DeleteUserAsync(id);
+            var stockModel = await _userService.DeleteUserAsync(id);
 
-            if (stockModel == null)
+            if (!stockModel)
             {
                 return NotFound();
             }
@@ -91,7 +96,7 @@ namespace api.Controllers
         [HttpPost]
         public async Task<IActionResult> GetUserByUsername(string username, string password)
         {
-            var existingUser = await _userRepo.GetUserByUsernameAsync(username);
+            var existingUser = await _userService.GetUserByUsernameAsync(username);
             if (existingUser == null)
             {
                 return NotFound();

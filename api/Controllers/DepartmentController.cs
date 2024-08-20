@@ -3,6 +3,7 @@ using api.Dtos.Department;
 using api.Interfaces;
 using api.Mappers;
 using api.Models;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 
 namespace api.Controllers
@@ -12,17 +13,19 @@ namespace api.Controllers
     public class DepartmentController : ControllerBase
     {
         private readonly IDepartmentService _departmentService;
-        public DepartmentController(IDepartmentService departmentService)
+        private readonly IMapper _mapper;
+        public DepartmentController(IDepartmentService departmentService, IMapper mapper)
         {
             _departmentService = departmentService;
+            _mapper = mapper;
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
             var departments = await _departmentService.GetAllDepartmentsAsync();
-            var departmentDtos = departments.Select(d => d.ToDepartmentDto());
-            return Ok(departmentDtos);
+            var departmentDto = _mapper.Map<List<DepartmentDto>>(departments);
+            return Ok(departmentDto);
         }
 
         [HttpGet("{id}")]
@@ -45,9 +48,9 @@ namespace api.Controllers
                 return BadRequest("Department already exists.");
             }
 
-            var department = departmentDto.ToDepartment();
+            var department = _mapper.Map<Department>(departmentDto);
             await _departmentService.CreateDepartmentAsync(department);
-            return CreatedAtAction(nameof(GetById), new { id = department.Id }, department.ToDepartmentDto());
+            return CreatedAtAction(nameof(GetById), new { id = department.Id }, department);
         }
 
         [HttpPut]
@@ -59,7 +62,7 @@ namespace api.Controllers
             {
                 return NotFound();
             }
-            return Ok(existingDepartment.ToDepartmentDto());
+            return Ok(_mapper.Map<DepartmentDto>(department));
         }
 
         [HttpDelete]

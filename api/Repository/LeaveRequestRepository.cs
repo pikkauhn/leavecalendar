@@ -90,7 +90,7 @@ namespace api.Repository
             }
             catch (Exception ex)
             {
-                throw new Exception($"An error occurred while updating a leave request with id: {id}", ex);
+                throw new Exception($"An error occurred while updating a leave request with id: {leaveRequest.Id}", ex);
             }
         }
     }

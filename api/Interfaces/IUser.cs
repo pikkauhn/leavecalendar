@@ -10,11 +10,11 @@ namespace api.Interfaces
     public interface IUserService
     {
         Task<List<User>> GetAllUsersAsync();
-        Task<User?>? GetUserByIdAsync(int id);
-        Task<User?>? GetUserByUsernameAsync(string username);
-        bool CreateUserAsync(User user);
-        bool UpdateUserAsync(int id, UpdateUserRequestDto userDto);
-        bool DeleteUserAsync(int id);
+        Task<User?> GetUserByIdAsync(int id);
+        Task<User?> GetUserByUsernameAsync(string username);
+        Task<bool> CreateUserAsync(User user);
+        Task<bool> UpdateUserAsync(int id, UpdateUserRequestDto userDto);
+        Task<bool> DeleteUserAsync(int id);
     }
 
     public interface IUserRepository

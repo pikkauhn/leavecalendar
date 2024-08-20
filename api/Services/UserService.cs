@@ -16,11 +16,11 @@ namespace api.Services
         {
             _userRepository = userRepository;
         }
-        public bool CreateUserAsync(User user)
+        public async Task<bool> CreateUserAsync(User user)
         {
             try
             {
-                _userRepository.CreateUserAsync(user);
+                await _userRepository.CreateUserAsync(user);
                 return true;
             }
             catch (Exception ex)
@@ -30,11 +30,11 @@ namespace api.Services
             }
         }
 
-        public bool DeleteUserAsync(int id)
+        public async Task<bool> DeleteUserAsync(int id)
         {
             try
-            {
-                _userRepository.DeleteUserAsync(id);
+            {                
+                await _userRepository.DeleteUserAsync(id);
                 return true;
             }
             catch (Exception ex)
@@ -57,31 +57,21 @@ namespace api.Services
             }
         }
 
-        public Task<User?>? GetUserByIdAsync(int id)
+        public async Task<User?> GetUserByIdAsync(int id)
         {
-            var user = _userRepository.GetUserByIdAsync(id);
-            if (user == null)
-            {
-                return null;
-            }
-            return _userRepository.GetUserByIdAsync(id);
+            return await _userRepository.GetUserByIdAsync(id);
         }
 
-        public Task<User?>? GetUserByUsernameAsync(string username)
+        public Task<User?> GetUserByUsernameAsync(string username)
         {
-            var user = _userRepository.GetUserByUsernameAsync(username);
-            if (user == null)
-            {
-                return null;
-            }
             return _userRepository.GetUserByUsernameAsync(username);
         }
 
-        public bool UpdateUserAsync(int id, UpdateUserRequestDto userDto)
+        public async Task<bool> UpdateUserAsync(int id, UpdateUserRequestDto userDto)
         {
             try
             {
-                _userRepository.UpdateUserAsync(id, userDto);
+                await _userRepository.UpdateUserAsync(id, userDto);
                 return true;
             }
             catch (Exception ex)

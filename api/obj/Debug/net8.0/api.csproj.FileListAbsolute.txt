@@ -40,3 +40,4 @@ C:\Users\ZBurns\Documents\GitHub\leavecalendar\api\obj\Debug\net8.0\api.pdb
 C:\Users\ZBurns\Documents\GitHub\leavecalendar\api\obj\Debug\net8.0\api.genruntimeconfig.cache
 C:\Users\ZBurns\Documents\GitHub\leavecalendar\api\obj\Debug\net8.0\ref\api.dll
 C:\Users\ZBurns\Documents\GitHub\leavecalendar\api\obj\Debug\net8.0\api.sourcelink.json
+C:\Users\ZBurns\Documents\GitHub\leavecalendar\api\bin\Debug\net8.0\AutoMapper.dll

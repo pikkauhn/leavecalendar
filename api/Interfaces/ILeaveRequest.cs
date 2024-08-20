@@ -12,7 +12,7 @@ namespace api.Interfaces
         Task<List<LeaveRequestDto>> GetAllLeaveRequestsAsync();
         Task<LeaveRequestDto?> GetLeaveRequestByIdAsync(int id);
         Task<LeaveRequestDto> CreateLeaveRequestAsync(LeaveRequestDto leaveRequestDto);
-        Task<LeaveRequest?> UpdateLeaveRequestAsync(int id, LeaveRequestDto updatedLeaveRequestDto);
+        Task<LeaveRequestDto?> UpdateLeaveRequestAsync(int id, LeaveRequestDto updatedLeaveRequestDto);
         Task<bool> DeleteLeaveRequestAsync(int id);
     }
 
