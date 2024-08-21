@@ -16,7 +16,6 @@ public class Program
 
         var app = builder.Build();
 
-        // Configure the HTTP request pipeline (optional)
         if (app.Environment.IsDevelopment())
         {
             app.UseDeveloperExceptionPage();
