@@ -1,54 +1,38 @@
-using api.Data;
-using api.Interfaces;
-using api.Repository;
-using api.Services;
-using Microsoft.EntityFrameworkCore;
-using MySqlConnector;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 
-var builder = WebApplication.CreateBuilder(args);
-
-// Add services to the container.
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-var connectionString = builder.Configuration.GetConnectionString("defaultConnection");
-builder.Services.AddControllers();
-builder.Services.AddCors(options =>
+public class Program
 {
-    options.AddPolicy("MyCorsPolicy",
-    builder =>
+    public static void Main(string[] args)
     {
-        builder.WithOrigins("http://localhost:3000", "http://localhost:5031")
-        .AllowAnyMethod()
-        .AllowAnyHeader();
-    });
-});
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+        var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddDbContext<ApplicationDBContext>(options =>
-{
-    options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
-});
+        // Configure services (delegate to Startup class)
+        builder.Services.AddControllers();
+        builder.Services.AddEndpointsApiExplorer();
+        builder.Services.AddSwaggerGen();
 
-builder.Services.AddScoped<IUserRepository, UserRepository>();
-builder.Services.AddScoped<IUserService, UserService>();
-builder.Services.AddScoped<IDepartmentService, DepartmentService>();
-builder.Services.AddScoped<IDepartmentRepository, DepartmentRepository>();
-builder.Services.AddScoped<IInvitationCodeService, InvitationCodeService>();
-builder.Services.AddScoped<IInvitationCodeRepository, InvitationCodeRepository>();
-builder.Services.AddScoped<ILeaveRequestService, LeaveRequestService>();
-builder.Services.AddScoped<ILeaveRequestRepository, LeaveRequestRepository>();
+        var app = builder.Build();
 
-var app = builder.Build();
+        // Configure the HTTP request pipeline (optional)
+        if (app.Environment.IsDevelopment())
+        {
+            app.UseDeveloperExceptionPage();
+        }
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
+        app.UseHttpsRedirection();
+
+        app.UseSwagger();
+        app.UseSwaggerUI();
+
+        app.UseRouting();
+
+        app.UseAuthorization();
+
+        app.MapControllers();
+
+        app.Run();
+    }
 }
-
-app.UseHttpsRedirection();
-app.UseCors("MyCorsPolicy");
-app.MapControllers();
-
-app.Run();

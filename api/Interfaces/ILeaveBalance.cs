@@ -9,8 +9,8 @@ namespace api.Interfaces
 {
     public interface ILeaveBalanceService
     {
-        Task<LeaveBalance> GetLeaveBalanceByIdAsync(int id);
-        Task<IEnumerable<LeaveBalance>> GetLeaveBalancesByUserIdAsync(int userId);
+        Task<LeaveBalance?> GetLeaveBalanceByIdAsync(int id);
+        Task<IEnumerable<LeaveBalance?>> GetLeaveBalancesByUserIdAsync(int userId);
         Task<LeaveBalance> CreateLeaveBalanceAsync(LeaveBalance leaveBalance);
         Task<LeaveBalance?> UpdateLeaveBalanceAsync(LeaveBalance leaveBalance);
         Task<LeaveBalance?> DeleteLeaveBalanceAsync(int id);

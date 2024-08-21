@@ -57,13 +57,6 @@ namespace api.Services
             existingLeaveRequest.LeaveType = leaveType;
             existingLeaveRequest.Comment = updatedLeaveRequest.Comment;
 
-        //             public required string Reason { get; set; }
-        // public DateTime StartDate { get; set; }
-        // public DateTime EndDate { get; set; }
-        // public required LeaveStatus Status { get; set; }
-        // public required LeaveType LeaveType { get; set; }
-        // public string? Comment { get; set; }
-
             await _leaveRequestRepository.UpdateLeaveRequestAsync(existingLeaveRequest);
             return _mapper.Map<LeaveRequestDto>(existingLeaveRequest);
         }
