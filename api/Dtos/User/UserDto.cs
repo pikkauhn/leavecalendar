@@ -1,7 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using api.Models;
 
 namespace api.Dtos.User
 {
@@ -10,7 +7,7 @@ namespace api.Dtos.User
         public int Id { get; set; }
         public required string Username { get; set; }
         public required string Name { get; set; }
-        public required string Role { get; set; }
+        public required int Role { get; set; }
         public int DepartmentId { get; set; }
     }
 }

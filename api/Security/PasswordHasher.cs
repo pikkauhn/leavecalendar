@@ -12,14 +12,14 @@ namespace api.Security
         public static string HashPassword(string password)
         {
             var hasher = new PasswordHasher<object>();
-            var hashedPassword = hasher.HashPassword(null, password);
+            var hashedPassword = hasher.HashPassword("", password);
             return hashedPassword;
         }
 
         public static PasswordVerificationResult VerifyPassword(string hashedPassword, string providedPassword)
         {
             var hasher = new PasswordHasher<object>();
-            return hasher.VerifyHashedPassword(null, hashedPassword, providedPassword);
+            return hasher.VerifyHashedPassword("", hashedPassword, providedPassword);
         }
     }
 }

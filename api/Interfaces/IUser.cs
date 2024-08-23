@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using api.Dtos.User;
 using api.Models;
 
@@ -25,10 +21,5 @@ namespace api.Interfaces
         Task<User> CreateUserAsync(User user);
         Task<User?> UpdateUserAsync(int id, UpdateUserRequestDto userDto);
         Task<User?> DeleteUserAsync(int id);
-    }
-    public interface IUserMapper
-    {
-        UserDto MapToUserDto(User user);
-        User MapToUser(UserDto userDto);
     }
 }

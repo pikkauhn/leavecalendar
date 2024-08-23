@@ -10,7 +10,7 @@ namespace api.Interfaces
     public interface ILeaveBalanceService
     {
         Task<LeaveBalance?> GetLeaveBalanceByIdAsync(int id);
-        Task<IEnumerable<LeaveBalance?>> GetLeaveBalancesByUserIdAsync(int userId);
+        Task<IEnumerable<LeaveBalance>?> GetLeaveBalancesByUserIdAsync(int userId);
         Task<LeaveBalance> CreateLeaveBalanceAsync(LeaveBalance leaveBalance);
         Task<LeaveBalance?> UpdateLeaveBalanceAsync(LeaveBalance leaveBalance);
         Task<LeaveBalance?> DeleteLeaveBalanceAsync(int id);
@@ -24,10 +24,5 @@ namespace api.Interfaces
         Task<LeaveBalance> CreateLeaveBalanceAsync(LeaveBalance leaveBalance);
         Task<LeaveBalance?> UpdateLeaveBalanceAsync(LeaveBalance leaveBalance);
         Task<LeaveBalance?> DeleteLeaveBalanceAsync(int id);
-    }
-        public interface ILeaveBalanceMapper
-    {
-        LeaveBalanceDto MapToLeaveBalanceDto(LeaveBalance leaveBalance);
-        LeaveBalance MapToLeaveBalance(LeaveBalanceDto leaveBalanceDto);
     }
 }

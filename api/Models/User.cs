@@ -2,9 +2,9 @@ namespace api.Models
 {
     public enum UserRole
     {
-        Admin,
-        User,
-        Manager
+        standard = 1,        
+        manager = 2,
+        admin = 3
     }
     public class User
     {
@@ -14,6 +14,5 @@ namespace api.Models
         public required string Name { get; set; }
         public required UserRole Role { get; set; }
         public required int DepartmentId { get; set; }        
-        public required Department Department { get; set; }
     }
 }

@@ -14,7 +14,6 @@ namespace api.Data
         public DbSet<Department> Departments { get; set; }        
         public DbSet<InvitationCode> InvitationCodes { get; set; }
         public DbSet<LeaveBalance> LeaveBalances { get; set; }
-        public DbSet<LeaveType> LeaveTypes { get; set; }
 
     }
 }

@@ -25,9 +25,4 @@ namespace api.Interfaces
         Task<InvitationCode?> UpdateInvitationCodeAsync(int id, InvitationCodeDto invitationCodeDto);
         Task<InvitationCode?> DeleteInvitationCodeAsync(int id);
     }
-        public interface IInvitationCodeMapper
-    {
-        InvitationCodeDto MapToInvitationCodeDto(InvitationCode invitationCode);
-        InvitationCode MapToInvitationCode(InvitationCodeDto invitationCodeDto);
-    }
 }

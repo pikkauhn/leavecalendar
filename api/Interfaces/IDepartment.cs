@@ -26,9 +26,4 @@ namespace api.Interfaces
         Task<Department?> UpdateDepartmentAsync(int id, Department department);
         Task<Department?> DeleteDepartmentAsync(int id);
     }
-        public interface IDepartmentMapper
-    {
-        DepartmentDto MapToDepartmentDto(Department department);
-        Department MapToDepartment(DepartmentDto departmentDto);
-    }
 }

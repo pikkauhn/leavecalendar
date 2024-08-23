@@ -43,7 +43,7 @@ namespace api.Services
             return leaveBalance;
         }
 
-        public async Task<IEnumerable<LeaveBalance?>> GetLeaveBalancesByUserIdAsync(int userId)
+        public async Task<IEnumerable<LeaveBalance>?> GetLeaveBalancesByUserIdAsync(int userId)
         {
             var leaveBalances = await _leaveBalanceRepository.GetLeaveBalancesByUserIdAsync(userId);
             if (leaveBalances == null)

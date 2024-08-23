@@ -1,5 +1,4 @@
 using api.Dtos.LeaveRequest;
-using api.Dtos.LeaveType;
 using api.Interfaces;
 using api.Models;
 using AutoMapper;
@@ -8,13 +7,11 @@ namespace api.Services
 {
     public class LeaveRequestService : ILeaveRequestService
     {
-        private readonly ILeaveTypeService _leaveTypeService;
         private readonly ILeaveRequestRepository _leaveRequestRepository;
         private readonly IMapper _mapper;
-        public LeaveRequestService(ILeaveRequestRepository leaveRequestRepository, ILeaveTypeService leaveTypeService, IMapper mapper)
+        public LeaveRequestService(ILeaveRequestRepository leaveRequestRepository, IMapper mapper)
         {
             _leaveRequestRepository = leaveRequestRepository;
-            _leaveTypeService = leaveTypeService;
             _mapper = mapper;            
         }
         public async Task<List<LeaveRequestDto>> GetAllLeaveRequestsAsync()
@@ -44,17 +41,12 @@ namespace api.Services
             {
                 return null;
             }
-            var leaveType = await _leaveTypeService.GetLeaveTypeByIdAsync(updatedLeaveRequest.LeaveType);
-            if (leaveType == null)
-            {
-                return null;
-            }
 
             existingLeaveRequest.Reason = updatedLeaveRequest.Reason;
             existingLeaveRequest.StartDate = updatedLeaveRequest.StartDate;
             existingLeaveRequest.EndDate = updatedLeaveRequest.EndDate;
             existingLeaveRequest.Status = (LeaveStatus)updatedLeaveRequest.Status;
-            existingLeaveRequest.LeaveType = leaveType;
+            existingLeaveRequest.LeaveType = (LeaveType)updatedLeaveRequest.LeaveType;
             existingLeaveRequest.Comment = updatedLeaveRequest.Comment;
 
             await _leaveRequestRepository.UpdateLeaveRequestAsync(existingLeaveRequest);

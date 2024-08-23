@@ -6,6 +6,11 @@ namespace api.Models
         Approved = 2,
         Rejected = 3
     }
+    public enum LeaveType
+    {
+        Vacation = 1,
+        Sick = 2
+    }
     
     public class LeaveRequest
     {
