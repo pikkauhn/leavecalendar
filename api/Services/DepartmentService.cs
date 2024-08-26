@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using api.Dtos.Department;
 using api.Interfaces;
 using api.Models;
@@ -15,24 +13,36 @@ namespace api.Services
             _departmentRepository = departmentRepository;
         }
 
-        public async Task<List<Department>> GetAllDepartmentsAsync()
+        public async Task<List<DepartmentDto>> GetAllDepartmentsAsync()
         {
-            return await _departmentRepository.GetAllDepartmentsAsync();
+            var departments = await _departmentRepository.GetAllDepartmentsAsync();
+            return departments;
         }
 
         public async Task<Department?> GetDepartmentByIdAsync(int id)
         {
-            return await _departmentRepository.GetDepartmentByIdAsync(id);
+            var department = await _departmentRepository.GetDepartmentByIdAsync(id);
+            if (department == null)
+            {
+                return null;
+            }
+            return department;
         }
 
         public async Task<Department?> GetDepartmentByNameAsync(string name)
         {
-            return await _departmentRepository.GetDepartmentByNameAsync(name);
+            var department = await _departmentRepository.GetDepartmentByNameAsync(name);
+            if (department == null)
+            {
+                return null;
+            }
+            return department;
         }
 
         public async Task<Department> CreateDepartmentAsync(Department department)
-        {
-            return await _departmentRepository.CreateDepartmentAsync(department);
+        {            
+            var createdDepartment = await _departmentRepository.CreateDepartmentAsync(department);
+            return createdDepartment;
         }
         public async Task<Department?> DeleteDepartmentAsync(int id)
         {
@@ -41,7 +51,8 @@ namespace api.Services
 
         public async Task<Department?> UpdateDepartmentAsync(int id, Department department)
         {
-            return await _departmentRepository.UpdateDepartmentAsync(id, department);
+            var updatedDepartment = await _departmentRepository.UpdateDepartmentAsync(id, department);
+            return updatedDepartment;
         }
     }
 }

@@ -1,7 +1,5 @@
-using api.Data;
 using api.Dtos.Department;
 using api.Interfaces;
-using api.Mappers;
 using api.Models;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
@@ -24,9 +22,10 @@ namespace api.Controllers
         public async Task<IActionResult> GetAll()
         {
             var departments = await _departmentService.GetAllDepartmentsAsync();
-            var departmentDto = _mapper.Map<List<DepartmentDto>>(departments);
-            return Ok(departmentDto);
+            
+            return Ok(departments);
         }
+
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
@@ -40,29 +39,31 @@ namespace api.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] DepartmentDto departmentDto)
+        public async Task<IActionResult> Create([FromBody] Department department)
         {
-            var existingDepartment = await _departmentService.GetDepartmentByNameAsync(departmentDto.Name);
+            var existingDepartment = await _departmentService.GetDepartmentByNameAsync(department.Name);
             if (existingDepartment != null)
             {
                 return BadRequest("Department already exists.");
             }
 
-            var department = _mapper.Map<Department>(departmentDto);
             await _departmentService.CreateDepartmentAsync(department);
             return CreatedAtAction(nameof(GetById), new { id = department.Id }, department);
         }
 
         [HttpPut]
         [Route("{id}")]
-        public async Task<IActionResult> Update(int id, [FromBody] Department department)
+        public async Task<IActionResult> Update(int id, [FromBody] DepartmentDto departmentDto)
         {
-            var existingDepartment = await _departmentService.UpdateDepartmentAsync(id, department);
+            var existingDepartment = await _departmentService.GetDepartmentByIdAsync(id);
             if (existingDepartment == null)
             {
                 return NotFound();
             }
-            return Ok(_mapper.Map<DepartmentDto>(department));
+            existingDepartment.Name = departmentDto.Name;
+            await _departmentService.UpdateDepartmentAsync(id, existingDepartment);
+            
+            return Ok(existingDepartment);
         }
 
         [HttpDelete]
@@ -76,7 +77,5 @@ namespace api.Controllers
             }
             return NoContent();
         }
-
-
     }
 }

@@ -1,12 +1,7 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using api.Data;
 using api.Dtos.Department;
 using api.Interfaces;
 using api.Models;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
 
 namespace api.Repository
@@ -51,11 +46,15 @@ namespace api.Repository
             }
         }
 
-        public async Task<List<Department>> GetAllDepartmentsAsync()
+        public async Task<List<DepartmentDto>> GetAllDepartmentsAsync()
         {
             try
             {
-                return await _context.Departments.ToListAsync();
+                var departments = await _context.Departments.ToListAsync();
+                return departments.Select(department => new DepartmentDto
+                {
+                    Name = department.Name
+                }).ToList();
             }
             catch (Exception ex)
             {
