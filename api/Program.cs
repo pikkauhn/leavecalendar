@@ -1,5 +1,6 @@
 using api.Data;
 using api.Interfaces;
+using api.Mappers;
 using api.Repository;
 using api.Services;
 using Microsoft.EntityFrameworkCore;
@@ -17,7 +18,7 @@ public class Program
             throw new ArgumentException("Missing connection string: defaultConnection");
         }
         // Register AutoMapper
-        builder.Services.AddAutoMapper(typeof(api.Mappers.MapperConfig));
+        builder.Services.AddAutoMapper(typeof(MappingProfile));
 
         // Register DbContext
         builder.Services.AddDbContext<ApplicationDBContext>(options =>

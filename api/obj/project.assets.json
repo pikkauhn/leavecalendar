@@ -4874,11 +4874,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "c:\\Users\\ZBurns\\Documents\\GitHub\\leavecalendar\\api\\api.csproj",
+      "projectUniqueName": "C:\\Users\\ZBurns\\Documents\\GitHub\\leavecalendar\\api\\api.csproj",
       "projectName": "api",
-      "projectPath": "c:\\Users\\ZBurns\\Documents\\GitHub\\leavecalendar\\api\\api.csproj",
+      "projectPath": "C:\\Users\\ZBurns\\Documents\\GitHub\\leavecalendar\\api\\api.csproj",
       "packagesPath": "C:\\Users\\ZBurns\\.nuget\\packages\\",
-      "outputPath": "c:\\Users\\ZBurns\\Documents\\GitHub\\leavecalendar\\api\\obj\\",
+      "outputPath": "C:\\Users\\ZBurns\\Documents\\GitHub\\leavecalendar\\api\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

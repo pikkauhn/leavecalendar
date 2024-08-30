@@ -1,13 +1,8 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using AutoMapper;
 using api.Dtos.InvitationCode;
 using api.Interfaces;
 using api.Models;
 using api.Security;
-using api.Dtos.LeaveRequest;
 
 namespace api.Services
 {
@@ -21,13 +16,12 @@ namespace api.Services
             _mapper = mapper;
         }
 
-        public async Task<InvitationCodeDto> CreateInvitationCodeAsync(InvitationCodeDto invitationCodeDto)
+        public async Task<InvitationCode> CreateInvitationCodeAsync(InvitationCode invitationCode)
         {
-            invitationCodeDto.Code = CodeGenerator.GenerateRandomCode(10);
-            var invitationCode = _mapper.Map<InvitationCode>(invitationCodeDto);
+            invitationCode.Code = CodeGenerator.GenerateRandomCode(10);
             
             var createdInvitationCode = await _invitationCodeRepository.CreateInvitationCodeAsync(invitationCode);
-            return _mapper.Map<InvitationCodeDto>(createdInvitationCode);
+            return createdInvitationCode;
         }
 
         public async Task<InvitationCode?> DeleteInvitationCodeAsync(int id)
@@ -38,7 +32,8 @@ namespace api.Services
         public async Task<List<InvitationCodeDto>> GetAllInvitationCodesAsync()
         {
             var invitationCodes = await _invitationCodeRepository.GetAllInvitationCodesAsync();
-            return _mapper.Map<List<InvitationCodeDto>>(invitationCodes);
+            var invitationcodeDto = _mapper.Map<List<InvitationCodeDto>>(invitationCodes);
+            return invitationcodeDto;
         }
 
         public async Task<InvitationCodeDto?> GetInvitationCodeByCodeAsync(string code)

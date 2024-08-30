@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using api.Interfaces;
 using api.Dtos.InvitationCode;
 using Microsoft.AspNetCore.Mvc;
+using api.Models;
 
 namespace api.Controllers
 {
@@ -37,11 +38,12 @@ namespace api.Controllers
 
         }
         [HttpPost]
-        public async Task<ActionResult<InvitationCodeDto>> CreateInvitationCode(InvitationCodeDto invitationCodeDto)
+        public async Task<ActionResult<InvitationCodeDto>> CreateInvitationCode(InvitationCode invitationCode)
         {
-            var createdInvitationCode = await _invitationCodeService.CreateInvitationCodeAsync(invitationCodeDto);
+            var createdInvitationCode = await _invitationCodeService.CreateInvitationCodeAsync(invitationCode);
             return CreatedAtAction("GetById", new { id = createdInvitationCode.Id}, createdInvitationCode);
         }
+
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(int id, [FromBody] InvitationCodeDto invitationCodeDto)
         {

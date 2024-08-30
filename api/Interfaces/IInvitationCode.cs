@@ -12,7 +12,7 @@ namespace api.Interfaces
         Task<List<InvitationCodeDto>> GetAllInvitationCodesAsync();
         Task<InvitationCodeDto?> GetInvitationCodeByIdAsync(int id);
         Task<InvitationCodeDto?> GetInvitationCodeByCodeAsync(string code);
-        Task<InvitationCodeDto> CreateInvitationCodeAsync(InvitationCodeDto invitationCodeDto);
+        Task<InvitationCode> CreateInvitationCodeAsync(InvitationCode invitationCode);
         Task<InvitationCodeDto?> UpdateInvitationCodeAsync(int id, InvitationCodeDto invitationCodeDto);
         Task<InvitationCode?> DeleteInvitationCodeAsync(int id);
     }

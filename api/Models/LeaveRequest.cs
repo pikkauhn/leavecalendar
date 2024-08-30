@@ -15,13 +15,13 @@ namespace api.Models
     public class LeaveRequest
     {
         public int Id { get; set; }
-        public int UserId { get; set; }
+        public required int UserId { get; set; }
         public required string Reason { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public required LeaveStatus Status { get; set; }
         public required LeaveType LeaveType { get; set; }
         public string? Comment { get; set; }
-        public required User User { get; set; }
+        public int? ResponseByUserId { get; set; }
     }
 }
