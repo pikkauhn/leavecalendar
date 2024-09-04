@@ -12,31 +12,31 @@ namespace api.Mappers
     {
         public MappingProfile()
         {
-                            // User
-                CreateMap<User, UserDto>();
-                CreateMap<UserDto, User>();
-                CreateMap<CreateUserRequestDto, User>();
-                CreateMap<UpdateUserRequestDto, User>();
+            // User
+            CreateMap<User, UserDto>();
+            CreateMap<UserDto, User>();
+            CreateMap<CreateUserRequestDto, User>();
+            CreateMap<UpdateUserRequestDto, User>();
 
-                // InvitationCode
-                CreateMap<InvitationCode, InvitationCodeDto>();
-                CreateMap<InvitationCodeDto, InvitationCode>();
+            // InvitationCode
+            CreateMap<InvitationCode, InvitationCodeDto>();
+            CreateMap<InvitationCodeDto, InvitationCode>();
 
-                // Department
-                CreateMap<Department, DepartmentDto>();
-                CreateMap<DepartmentDto, Department>();
+            // Department
+            CreateMap<Department, DepartmentDto>();
+            CreateMap<DepartmentDto, Department>();
 
-                // LeaveRequest
-                CreateMap<LeaveRequest, LeaveRequestDto>();
-                CreateMap<LeaveRequestDto, LeaveRequest>();
-                CreateMap<LeaveRequest, LeaveResponseDto>();
-                CreateMap<LeaveResponseDto, LeaveRequest>();
+            // LeaveRequest
+            CreateMap<LeaveRequest, LeaveRequestDto>();
+            CreateMap<LeaveRequestDto, LeaveRequest>();
+            CreateMap<LeaveRequest, LeaveResponseDto>();
+            CreateMap<LeaveResponseDto, LeaveRequest>();
 
-                // LeaveBalance
-                CreateMap<LeaveBalance, LeaveBalanceDto>();
-                CreateMap<LeaveBalanceDto, LeaveBalance>();
-                CreateMap<CreateLeaveBalanceDto, LeaveBalance>();
-                CreateMap<UpdateLeaveBalanceDto, LeaveBalance>();
+            // LeaveBalance
+            CreateMap<LeaveBalance, LeaveBalanceDto>();
+            CreateMap<LeaveBalanceDto, LeaveBalance>();
+            CreateMap<CreateLeaveBalanceDto, LeaveBalance>();
+            CreateMap<UpdateLeaveBalanceDto, LeaveBalance>();
         }
     }
 }

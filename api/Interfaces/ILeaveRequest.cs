@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using api.Dtos.LeaveRequest;
 using api.Models;
 
@@ -12,7 +8,7 @@ namespace api.Interfaces
         Task<List<LeaveRequestDto>> GetAllLeaveRequestsAsync();
         Task<LeaveRequestDto?> GetLeaveRequestByIdAsync(int id);
         Task<LeaveRequestDto> CreateLeaveRequestAsync(LeaveRequestDto leaveRequestDto);
-        Task<LeaveRequestDto?> UpdateLeaveRequestAsync(int id, LeaveRequestDto updatedLeaveRequestDto);
+        Task<LeaveRequestDto?> UpdateLeaveRequestAsync(int id, int updatedByUserId, LeaveRequestDto updatedLeaveRequestDto);        
         Task<bool> DeleteLeaveRequestAsync(int id);
     }
 

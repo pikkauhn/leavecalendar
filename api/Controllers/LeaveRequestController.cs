@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using api.Dtos.LeaveRequest;
 using api.Interfaces;
 using Microsoft.AspNetCore.Mvc;
@@ -40,9 +36,9 @@ namespace api.Controllers
             return CreatedAtAction("GetById", new { id = createdLeaveRequest.UserId }, createdLeaveRequest);
         }
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update(int id, LeaveRequestDto updatedLeaveRequest)
+        public async Task<IActionResult> Update(int id, int updatedByUserId, LeaveRequestDto updatedLeaveRequest)
         {
-            var existingLeaveRequest = await _leaveRequestService.UpdateLeaveRequestAsync(id, updatedLeaveRequest);
+            var existingLeaveRequest = await _leaveRequestService.UpdateLeaveRequestAsync(id, updatedByUserId, updatedLeaveRequest);
             if (existingLeaveRequest == null)
             {
                 return NotFound();

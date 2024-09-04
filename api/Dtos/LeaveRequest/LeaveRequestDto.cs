@@ -7,7 +7,10 @@ namespace api.Dtos.LeaveRequest
         public required string Reason { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
+        public int Status { get; set; }
+        public String? Comment { get; set; }
         public required int LeaveType { get; set; }
+        public required int ResponseByUserId { get; set; }
     }
     public class LeaveResponseDto
     {

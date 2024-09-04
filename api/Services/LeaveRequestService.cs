@@ -34,7 +34,7 @@ namespace api.Services
             var createdLeaveRequest = await _leaveRequestRepository.CreateLeaveRequestAsync(leaveRequest);
             return _mapper.Map<LeaveRequestDto>(createdLeaveRequest);
         }
-        public async Task<LeaveRequestDto?> UpdateLeaveRequestAsync(int id, LeaveRequestDto updatedLeaveRequest)
+        public async Task<LeaveRequestDto?> UpdateLeaveRequestAsync(int id, int updatedByUserId, LeaveRequestDto updatedLeaveRequest)
         {
             var existingLeaveRequest = await _leaveRequestRepository.GetLeaveRequestByIdAsync(id);
             if (existingLeaveRequest == null)
@@ -45,6 +45,21 @@ namespace api.Services
             existingLeaveRequest.Reason = updatedLeaveRequest.Reason;
             existingLeaveRequest.StartDate = updatedLeaveRequest.StartDate;
             existingLeaveRequest.EndDate = updatedLeaveRequest.EndDate;
+            existingLeaveRequest.Status = (LeaveStatus)updatedLeaveRequest.Status;
+            existingLeaveRequest.LeaveType = (LeaveType)updatedLeaveRequest.LeaveType;
+            existingLeaveRequest.ResponseByUserId = updatedByUserId;
+            existingLeaveRequest.Comment = updatedLeaveRequest.Comment;
+
+            await _leaveRequestRepository.UpdateLeaveRequestAsync(existingLeaveRequest);
+            return _mapper.Map<LeaveRequestDto>(existingLeaveRequest);
+        }
+        public async Task<LeaveRequestDto?> UpdateLeaveStatusAsync(int id, int updatedByUserId, LeaveRequestDto updatedLeaveRequest)
+        {
+            var existingLeaveRequest = await _leaveRequestRepository.GetLeaveRequestByIdAsync(id);
+            if (existingLeaveRequest == null)
+            {
+                return null;
+            }
             existingLeaveRequest.Status = (LeaveStatus)updatedLeaveRequest.Status;
             existingLeaveRequest.LeaveType = (LeaveType)updatedLeaveRequest.LeaveType;
             existingLeaveRequest.Comment = updatedLeaveRequest.Comment;
