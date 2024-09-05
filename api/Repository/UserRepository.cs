@@ -67,7 +67,7 @@ namespace api.Repository
         {
             try
             {
-                return await _context.Users.FindAsync(id);
+                return await _context.Users.FirstOrDefaultAsync(u => u.Id == id);
             }
             catch (Exception ex)
             {

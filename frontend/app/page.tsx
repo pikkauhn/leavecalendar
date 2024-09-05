@@ -1,36 +1,42 @@
 'use client'
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Button } from 'primereact/button'
+import { InputText } from 'primereact/inputtext'
+
+import './DataFetchers/UserFetcher';
+import { fetchUserById, fetchUserByUsername, fetchUsers } from './DataFetchers/UserFetcher';
 
 
 export default function Home() {
   const [items, setItems] = useState([]);
+  const [userId, setUserId] = useState('');
+  const [username, setUsername] = useState('');
 
-  const getUsers = async () => {
-    try {
-      const response = await fetch('http://localhost:5031/api/user', {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        }
-      })
-      if (!response.ok) {
-        throw new Error(`Failed to fetch data. Status: ${response.status}`);
-      }
-      return response.json();
-    } catch (error) {
-      console.error('Get Users Error: ', error);
+  useEffect(() => {
+    if (items != null) {
+      console.log(items)
     }
+  }, [items])
+
+  const allUsers = async () => {
+    setItems(await fetchUsers());
   }
 
-  const setUsers = async () => {
-    setItems(await getUsers());
-    console.log(items);
+  const userById = async () => {
+    setItems(await fetchUserById(parseInt(userId)));
+  }
+
+  const userByUsername = async () => {
+    setItems(await fetchUserByUsername(username));
   }
 
   return (
     <>
-      <Button label="test" onClick={() => { setUsers() }}/>
+      <Button label="Get all users" onClick={() => { allUsers() }}/>
+      <InputText placeholder='User Id' value={userId} keyfilter='int' onChange={(e) => setUserId(e.target.value)} />
+      <Button label="Get user by Id" onClick={() => { userById() }}/>
+      <InputText placeholder='Username' value={username} onChange={(e) => setUsername(e.target.value)} />
+      <Button label="Get user by Username" onClick={() => { userByUsername() }}/>
     </>
   );
 }

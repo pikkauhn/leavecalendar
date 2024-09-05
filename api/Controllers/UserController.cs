@@ -92,9 +92,21 @@ namespace api.Controllers
 
         }
 
+        [HttpGet]
+        [Route("n/{username}")]
+        public async Task<IActionResult> GetUserByUsername( string username )
+        {
+            var existingUser = await _userService.GetUserByUsernameAsync(username);
+            if (existingUser == null)
+            {
+                return NotFound();
+            }
+            return Ok(existingUser);
+        }
+
         [Route("Verify")]
         [HttpPost]
-        public async Task<IActionResult> GetUserByUsername(string username, string password)
+        public async Task<IActionResult> VerifyUserAccount(string username, string password)
         {
             var existingUser = await _userService.GetUserByUsernameAsync(username);
             if (existingUser == null)
