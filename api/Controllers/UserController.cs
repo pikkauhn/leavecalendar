@@ -93,7 +93,7 @@ namespace api.Controllers
         }
 
         [HttpGet]
-        [Route("n/{username}")]
+        [Route("username/{username}")]
         public async Task<IActionResult> GetUserByUsername( string username )
         {
             var existingUser = await _userService.GetUserByUsernameAsync(username);
@@ -106,14 +106,14 @@ namespace api.Controllers
 
         [Route("Verify")]
         [HttpPost]
-        public async Task<IActionResult> VerifyUserAccount(string username, string password)
+        public async Task<IActionResult> VerifyUserAccount(VerifyUserPassword user)
         {
-            var existingUser = await _userService.GetUserByUsernameAsync(username);
+            var existingUser = await _userService.GetUserByUsernameAsync(user.Username);
             if (existingUser == null)
             {
                 return NotFound();
             }
-            var isPasswordValid = PasswordHasher.VerifyPassword(existingUser.Password, password);
+            var isPasswordValid = PasswordHasher.VerifyPassword(existingUser.Password, user.Password);
             return Ok(isPasswordValid);
         }
     }

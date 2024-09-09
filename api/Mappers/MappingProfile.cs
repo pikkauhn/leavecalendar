@@ -1,6 +1,5 @@
 using AutoMapper;
 using api.Models;
-using api.Dtos.Department;
 using api.Dtos.InvitationCode;
 using api.Dtos.LeaveBalance;
 using api.Dtos.LeaveRequest;
@@ -21,10 +20,6 @@ namespace api.Mappers
             // InvitationCode
             CreateMap<InvitationCode, InvitationCodeDto>();
             CreateMap<InvitationCodeDto, InvitationCode>();
-
-            // Department
-            CreateMap<Department, DepartmentDto>();
-            CreateMap<DepartmentDto, Department>();
 
             // LeaveRequest
             CreateMap<LeaveRequest, LeaveRequestDto>();

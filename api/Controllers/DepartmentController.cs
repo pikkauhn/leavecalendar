@@ -1,4 +1,3 @@
-using api.Dtos.Department;
 using api.Interfaces;
 using api.Models;
 using AutoMapper;
@@ -53,14 +52,14 @@ namespace api.Controllers
 
         [HttpPut]
         [Route("{id}")]
-        public async Task<IActionResult> Update(int id, [FromBody] DepartmentDto departmentDto)
+        public async Task<IActionResult> Update(int id, [FromBody] Department Department)
         {
             var existingDepartment = await _departmentService.GetDepartmentByIdAsync(id);
             if (existingDepartment == null)
             {
                 return NotFound();
             }
-            existingDepartment.Name = departmentDto.Name;
+            existingDepartment.Name = Department.Name;
             await _departmentService.UpdateDepartmentAsync(id, existingDepartment);
             
             return Ok(existingDepartment);

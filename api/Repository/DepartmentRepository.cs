@@ -1,5 +1,4 @@
 using api.Data;
-using api.Dtos.Department;
 using api.Interfaces;
 using api.Models;
 using Microsoft.EntityFrameworkCore;
@@ -46,15 +45,12 @@ namespace api.Repository
             }
         }
 
-        public async Task<List<DepartmentDto>> GetAllDepartmentsAsync()
+        public async Task<List<Department>> GetAllDepartmentsAsync()
         {
             try
             {
                 var departments = await _context.Departments.ToListAsync();
-                return departments.Select(department => new DepartmentDto
-                {
-                    Name = department.Name
-                }).ToList();
+                return departments;
             }
             catch (Exception ex)
             {

@@ -15,7 +15,8 @@ namespace api.Services
         public async Task<bool> CreateUserAsync(User user)
         {
             try
-            {
+            {                
+                user.Role = UserRole.standard;
                 await _userRepository.CreateUserAsync(user);
                 return true;
             }

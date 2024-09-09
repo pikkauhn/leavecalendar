@@ -1,4 +1,3 @@
-using api.Dtos.Department;
 using api.Interfaces;
 using api.Models;
 
@@ -13,7 +12,7 @@ namespace api.Services
             _departmentRepository = departmentRepository;
         }
 
-        public async Task<List<DepartmentDto>> GetAllDepartmentsAsync()
+        public async Task<List<Department>> GetAllDepartmentsAsync()
         {
             var departments = await _departmentRepository.GetAllDepartmentsAsync();
             return departments;

@@ -7,11 +7,13 @@ export default function Navbar() {
     const items: MenuItem[] = [
         {
             label: 'Home',
-            icon: 'pi pi-home'
+            icon: 'pi pi-home',
+            url: '/'
         },
         {
-            label: 'Features',
-            icon: 'pi pi-star'
+            label: 'Register',
+            icon: 'pi pi-star',
+            url: '/Register'
         },
         {
             label: 'Projects',
