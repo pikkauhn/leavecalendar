@@ -20,8 +20,7 @@ namespace api.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            var departments = await _departmentService.GetAllDepartmentsAsync();
-            
+            var departments = await _departmentService.GetAllDepartmentsAsync();            
             return Ok(departments);
         }
 

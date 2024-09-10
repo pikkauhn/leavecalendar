@@ -12,15 +12,15 @@ export default function Home() {
   const [userId, setUserId] = useState('');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [updatePassword, setUpdatePassword] = useState('');
+  const [newPassword, setNewPassword] = useState('');
+  const [newEmail, setNewEmail] = useState('');
 
-  useEffect(() => {
-    if (items != null) {
-      console.log(items)
-    }
-  }, [items])
 
+  
   const allUsers = async () => {
     setItems(await fetchAllUsers());
+    console.log(items)
   }
 
   const userById = async () => {
@@ -49,6 +49,13 @@ export default function Home() {
       <Button label="Get user by Username" onClick={() => { userByUsername() }} />
       <InputText placeholder='Verify' value={password} onChange={(e) => setPassword(e.target.value)} />
       <Button label="Verify Passwords" onClick={() => { verifyPass() }} />
+        <hr />
+      First get user by Id, then enter info to update, password required to make changes:<br/>
+      <InputText placeholder='Email Address' value={newEmail} onChange={(e) => setNewEmail(e.target.value)} />
+      <InputText placeholder='Password' value={newPassword} onChange={(e) => setNewPassword(e.target.value)} />
+      <hr />
+          <div>     
+    </div>
     </>
   );
 }
