@@ -13,10 +13,17 @@ enum UserRole {
   Admin = 3,
 }
 
-interface UpdateUserRequestDto {
+interface UpdateUserDto {
   name?: string;
+  email?: string;
+  password?: string;
   role?: UserRole;
   departmentId?: number;
+}
+
+interface updateEmail {
+  name?: string;
+  email?: string
 }
 
 interface CreateUserDto {

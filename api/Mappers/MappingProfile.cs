@@ -16,6 +16,9 @@ namespace api.Mappers
             CreateMap<UserDto, User>();
             CreateMap<CreateUserRequestDto, User>();
             CreateMap<UpdateUserRequestDto, User>();
+            CreateMap<UpdateUserRequestDto, User>()
+               .ForAllMembers(opt => opt.Condition((src, dest, value) =>
+               value != null && !string.IsNullOrEmpty(value.ToString()) && !value.Equals(0)));
 
             // InvitationCode
             CreateMap<InvitationCode, InvitationCodeDto>();
@@ -32,6 +35,7 @@ namespace api.Mappers
             CreateMap<LeaveBalanceDto, LeaveBalance>();
             CreateMap<CreateLeaveBalanceDto, LeaveBalance>();
             CreateMap<UpdateLeaveBalanceDto, LeaveBalance>();
+
         }
     }
 }

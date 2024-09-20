@@ -19,7 +19,7 @@ namespace api.Interfaces
         Task<User?> GetUserByIdAsync(int id);
         Task<User?> GetUserByUsernameAsync(string username);
         Task<User> CreateUserAsync(User user);
-        Task<User?> UpdateUserAsync(int id, UpdateUserRequestDto userDto);
+        Task<User?> UpdateUserAsync(User user);
         Task<User?> DeleteUserAsync(int id);
     }
 }

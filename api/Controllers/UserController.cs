@@ -1,4 +1,3 @@
-using System.Reflection.Metadata.Ecma335;
 using api.Data;
 using api.Dtos.User;
 using api.Interfaces;
@@ -71,10 +70,7 @@ namespace api.Controllers
             {
                 return NotFound();
             }
-
-            updateDto.Password = PasswordHasher.HashPassword(updateDto.Password);
-            await _userService.UpdateUserAsync(id, updateDto);
-            return Ok(_mapper.Map<User>(userModel));
+            return Ok(userModel);
         }
 
         [HttpDelete]

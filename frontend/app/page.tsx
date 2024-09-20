@@ -4,8 +4,12 @@ import { Button } from 'primereact/button'
 import { InputText } from 'primereact/inputtext'
 
 import './DataFetchers/UserFetcher';
-import { fetchUserById, fetchUserByUsername, fetchAllUsers, verifyPassword } from './DataFetchers/UserFetcher';
+import { fetchUserById, fetchUserByUsername, fetchAllUsers, verifyPassword, updateUser } from './DataFetchers/UserFetcher';
 
+interface updateUser {
+  email: string,
+  password: string
+}
 
 export default function Home() {
   const [items, setItems] = useState([]);
@@ -17,10 +21,12 @@ export default function Home() {
   const [newEmail, setNewEmail] = useState('');
 
 
-  
+useEffect(() => {
+  console.log(items)
+}, [items])
+
   const allUsers = async () => {
-    setItems(await fetchAllUsers());
-    console.log(items)
+    setItems(await fetchAllUsers());    
   }
 
   const userById = async () => {
@@ -29,6 +35,14 @@ export default function Home() {
 
   const userByUsername = async () => {
     setItems(await fetchUserByUsername(username));
+  }
+
+  const updateUserEmail = async() => {
+    const updatedUser: updateUser = {
+      email: newEmail, 
+      password: newPassword
+    }
+    setItems(await updateUser(parseInt(userId), updatedUser))
   }
 
   const verifyPass = async () => {
@@ -49,13 +63,14 @@ export default function Home() {
       <Button label="Get user by Username" onClick={() => { userByUsername() }} />
       <InputText placeholder='Verify' value={password} onChange={(e) => setPassword(e.target.value)} />
       <Button label="Verify Passwords" onClick={() => { verifyPass() }} />
-        <hr />
-      First get user by Id, then enter info to update, password required to make changes:<br/>
+      <hr />
+      First get user by Id, then enter info to update, password required to make changes:<br />
       <InputText placeholder='Email Address' value={newEmail} onChange={(e) => setNewEmail(e.target.value)} />
       <InputText placeholder='Password' value={newPassword} onChange={(e) => setNewPassword(e.target.value)} />
+      <Button label='Update Email' onClick={() => { updateUserEmail() }} />
       <hr />
-          <div>     
-    </div>
+      <div>
+      </div>
     </>
   );
 }

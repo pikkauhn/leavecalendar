@@ -1,21 +1,26 @@
 using api.Dtos.User;
 using api.Interfaces;
 using api.Models;
+using AutoMapper;
+using api.Utils;
+using Microsoft.AspNetCore.Mvc;
 
 namespace api.Services
 {
     public class UserService : IUserService
     {
         private readonly IUserRepository _userRepository;
+        private readonly IMapper _mapper;
 
-        public UserService(IUserRepository userRepository)
+        public UserService(IUserRepository userRepository, IMapper mapper)
         {
             _userRepository = userRepository;
+            _mapper = mapper;
         }
         public async Task<bool> CreateUserAsync(User user)
         {
             try
-            {                
+            {
                 user.Role = UserRole.standard;
                 await _userRepository.CreateUserAsync(user);
                 return true;
@@ -30,7 +35,7 @@ namespace api.Services
         public async Task<bool> DeleteUserAsync(int id)
         {
             try
-            {                
+            {
                 await _userRepository.DeleteUserAsync(id);
                 return true;
             }
@@ -44,7 +49,7 @@ namespace api.Services
         public Task<List<User>> GetAllUsersAsync()
         {
             try
-            {                
+            {
                 return _userRepository.GetAllUsersAsync();
             }
             catch (Exception ex)
@@ -68,7 +73,46 @@ namespace api.Services
         {
             try
             {
-                await _userRepository.UpdateUserAsync(id, userDto);
+                var user = await _userRepository.GetUserByIdAsync(id);
+                if (user == null)
+                {
+                    Console.Write("User not found");
+                    return false;
+                }
+
+                foreach (var currentPropertyInfo in typeof(User).GetProperties())
+                {
+                    var currentPropertyName = currentPropertyInfo.Name;
+                    var currentPropertyValue = currentPropertyInfo.GetValue(user);
+                    Console.Write($"{currentPropertyName} : {currentPropertyValue} ");
+                    var newPropertyInfo = typeof(UpdateUserRequestDto).GetProperty(currentPropertyName);
+                    var newPropertyName = newPropertyInfo?.Name;
+                    var newPropertyValue = newPropertyInfo?.GetValue(userDto);
+
+                    if (newPropertyValue == null)
+                    {
+                        continue;
+                    }
+                    if (newPropertyName == null)
+                    {
+                        continue;
+                    }
+
+                    Console.Write($"{newPropertyName} : {newPropertyValue} ");
+
+                    if (newPropertyValue?.Equals(currentPropertyValue) == true)
+                    {
+                        continue;
+                    }
+
+                    if (!Validation.isPropertyValid(userDto, newPropertyName))
+                    {
+                        currentPropertyInfo.SetValue(user, newPropertyValue);
+                    }
+                }
+
+                Console.Write("Updated : " + user.Email);
+                await _userRepository.UpdateUserAsync(user);
                 return true;
             }
             catch (Exception ex)

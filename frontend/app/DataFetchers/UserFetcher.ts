@@ -51,7 +51,7 @@ export const createUser = async (user: CreateUserDto) => {
 }
 
 // Update user
-export const updateUser = async (Id: number, userDto: UpdateUserRequestDto) => {
+export const updateUser = async (Id: number, userDto: UpdateUserDto) => {
     try {
         const response = await axios.put(`${baseUrl}/${Id}`, userDto);
         return response.data;

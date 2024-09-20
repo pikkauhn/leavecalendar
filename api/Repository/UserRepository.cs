@@ -87,22 +87,22 @@ namespace api.Repository
             }
         }
 
-        public async Task<User?> UpdateUserAsync(int id, UpdateUserRequestDto userDto)
+        public async Task<User?> UpdateUserAsync(User user)
         {
             try
             {
-                var existingUser = await _context.Users.FirstOrDefaultAsync(u => u.Id == id);
+                var existingUser = await _context.Users.FirstOrDefaultAsync(u => u.Id == user.Id);
                 if (existingUser == null)
                 {
                     return null;
                 }
-                _context.Entry(existingUser).CurrentValues.SetValues(userDto);
+                _context.Entry(existingUser).CurrentValues.SetValues(user);
                 await _context.SaveChangesAsync();
                 return existingUser;
             }
             catch (Exception ex)
             {
-                throw new Exception($"An error occurred while updating user with id: {id}", ex);
+                throw new Exception($"An error occurred while updating user with id: {user.Id}", ex);
             }
         }
     }
