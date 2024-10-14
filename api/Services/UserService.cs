@@ -3,7 +3,6 @@ using api.Interfaces;
 using api.Models;
 using AutoMapper;
 using api.Utils;
-using Microsoft.AspNetCore.Mvc;
 
 namespace api.Services
 {

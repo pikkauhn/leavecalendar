@@ -1,5 +1,6 @@
 using api.Dtos.LeaveRequest;
 using api.Interfaces;
+using api.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace api.Controllers
@@ -54,6 +55,15 @@ namespace api.Controllers
                 return NotFound();
             }
             return NoContent();
+        }
+        
+        [HttpGet]
+        [Route("userRequest/{userId}")]
+        public async Task<ActionResult<LeaveRequest>> GetByUserId(int userId)
+        {
+            var leaveRequest = await _leaveRequestService.GetLeaveRequestByUserIdAsync(userId);
+            
+            return Ok(leaveRequest);
         }
     }
 }

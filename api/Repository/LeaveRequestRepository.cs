@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using api.Data;
+using api.Dtos.LeaveRequest;
 using api.Interfaces;
 using api.Models;
 using Microsoft.AspNetCore.Http.HttpResults;
@@ -73,6 +74,28 @@ namespace api.Repository
             {
                 throw new Exception($"An error occurred while retrieving a leave request with id: {id}", ex);
             }
+        }
+
+        public async Task<List<LeaveRequest>?> GetLeaveRequestByUserIdAsync(int userId)
+        {
+            try
+            {
+                var existingUser = await _context.Users.FirstOrDefaultAsync(u => u.Id == userId);
+                if (existingUser == null)
+                {
+                    return null;
+                }
+                var leaveRequests = await _context.LeaveRequests
+                                                    .Where(lr => lr.UserId == userId)
+                                                    .ToListAsync();
+                
+                return leaveRequests;
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"An error occurred while retrieving leave requests with userId: {userId}", ex);
+            }            
         }
 
         public async Task<LeaveRequest?> UpdateLeaveRequestAsync(LeaveRequest leaveRequest)

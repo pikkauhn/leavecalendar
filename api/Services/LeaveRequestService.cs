@@ -72,5 +72,12 @@ namespace api.Services
             var leaveRequest = await _leaveRequestRepository.DeleteLeaveRequestAsync(id);
             return leaveRequest != null;
         }
+
+        public Task<List<LeaveRequest>> GetLeaveRequestByUserIdAsync(int userId)
+        {
+            var leaveRequests = _leaveRequestRepository.GetLeaveRequestByUserIdAsync(userId);
+            return leaveRequests!;            
+        }
+
     }
 }

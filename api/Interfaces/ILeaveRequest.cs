@@ -7,8 +7,9 @@ namespace api.Interfaces
     {
         Task<List<LeaveRequestDto>> GetAllLeaveRequestsAsync();
         Task<LeaveRequestDto?> GetLeaveRequestByIdAsync(int id);
+        Task<List<LeaveRequest>> GetLeaveRequestByUserIdAsync(int userId);
         Task<LeaveRequestDto> CreateLeaveRequestAsync(LeaveRequestDto leaveRequestDto);
-        Task<LeaveRequestDto?> UpdateLeaveRequestAsync(int id, int updatedByUserId, LeaveRequestDto updatedLeaveRequestDto);        
+        Task<LeaveRequestDto?> UpdateLeaveRequestAsync(int id, int updatedByUserId, LeaveRequestDto updatedLeaveRequestDto);
         Task<bool> DeleteLeaveRequestAsync(int id);
     }
 
@@ -16,6 +17,7 @@ namespace api.Interfaces
     {
         Task<List<LeaveRequest>> GetAllLeaveRequestsAsync();
         Task<LeaveRequest?> GetLeaveRequestByIdAsync(int id);
+        Task<List<LeaveRequest>?> GetLeaveRequestByUserIdAsync(int userId);
         Task<LeaveRequest> CreateLeaveRequestAsync(LeaveRequest leaveRequest);
         Task<LeaveRequest?> UpdateLeaveRequestAsync(LeaveRequest leaveRequest);
         Task<LeaveRequest?> DeleteLeaveRequestAsync(int id);
