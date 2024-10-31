@@ -3,7 +3,8 @@ import { useState, useEffect } from 'react';
 import { Button } from 'primereact/button'
 import { InputText } from 'primereact/inputtext'
 
-// import './DataFetchers/UserFetcher';
+import './DataFetchers/UserFetcher';
+
 import { fetchUserById, fetchUserByUsername, fetchAllUsers, verifyPassword, updateUser } from '../../DataFetchers/UserFetcher';
 
 interface updateUser {
