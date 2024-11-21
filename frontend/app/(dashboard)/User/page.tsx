@@ -1,9 +1,7 @@
 'use client'
 import { useState, useEffect } from 'react';
-import { Button } from 'primereact/button'
-import { InputText } from 'primereact/inputtext'
-
-import './DataFetchers/UserFetcher';
+import { Button } from 'primereact/button';
+import { InputText } from 'primereact/inputtext';
 
 import { fetchUserById, fetchUserByUsername, fetchAllUsers, verifyPassword, updateUser } from '../../DataFetchers/UserFetcher';
 
@@ -22,7 +20,9 @@ export default function Home() {
 
 
 useEffect(() => {
+  if (items.length > 0) {
   console.log(items)
+  }
 }, [items])
 
   const allUsers = async () => {

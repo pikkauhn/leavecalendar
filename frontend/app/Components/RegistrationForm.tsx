@@ -5,7 +5,7 @@ import { InputText } from 'primereact/inputtext';
 import { Dropdown } from 'primereact/dropdown';
 import { Button } from 'primereact/button';
 
-import { fetchAllDepartments } from '../DataFetchers/DepartmentFetcher';
+// import { fetchAllDepartments } from '../DataFetchers/DepartmentFetcher';
 import { createUser } from '../DataFetchers/UserFetcher';
 
 interface RegistrationFormProps {
@@ -18,26 +18,36 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({ onRegistrationSucce
     const [password, setPassword] = useState('');
     const [verifyPassword, setVerifyPassword] = useState('');
     const [name, setName] = useState('');
-    const [departments, setDepartments] = useState<Department[]>([]);
     const [selectedDepartment, setSelectedDepartment] = useState<Department>();
+    const departments = [
+        { id: 1, name: 'ADM' },
+        { id: 2, name: 'GPS' },
+        { id: 3, name: 'MTR' },
+        { id: 4, name: 'OFF' },
+        { id: 5, name: 'S/S' },
+        { id: 6, name: 'W/S' },
+        { id: 7, name: 'WTP' },
+        { id: 8, name: 'WWTP' },
+    ]
 
-    useEffect(() => {
-        const fetchDepartents = async () => {
-            try {
-                const fetchedDepartments = await fetchAllDepartments();                
-                setDepartments(fetchedDepartments);
-            } catch (error) {
-                console.error('Fetch Departments Error: ', error);
-            }
-        };
+    // useEffect(() => {
+    //     const fetchDepartents = async () => {
+    //         try {
+    //             const fetchedDepartments = await fetchAllDepartments();
+    //             console.log(fetchedDepartments);
+    //             setDepartments(fetchedDepartments);
+    //         } catch (error) {
+    //             console.error('Fetch Departments Error: ', error);
+    //         }
+    //     };
 
-        fetchDepartents();
-    }, []);
+    //     fetchDepartents();
+    // }, []);
 
-    const handleSubmit = async () => {     
-        const departmentId = selectedDepartment?.id as number;   
-        const role = 1;        
-        try {            
+    const handleSubmit = async () => {
+        const departmentId = selectedDepartment?.id as number;
+        const role = 1;
+        try {
             if (!verifyPasswords(password, verifyPassword)) {
                 console.error('Passwords do not match');
                 return;
@@ -48,9 +58,9 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({ onRegistrationSucce
                 password,
                 name,
                 role,
-                departmentId,                
+                departmentId,
             };
-            
+
             const createdUser = await createUser(newUser);
             if (createdUser) {
                 onRegistrationSuccess();

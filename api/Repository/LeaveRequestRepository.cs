@@ -88,14 +88,14 @@ namespace api.Repository
                 var leaveRequests = await _context.LeaveRequests
                                                     .Where(lr => lr.UserId == userId)
                                                     .ToListAsync();
-                
+
                 return leaveRequests;
 
             }
             catch (Exception ex)
             {
                 throw new Exception($"An error occurred while retrieving leave requests with userId: {userId}", ex);
-            }            
+            }
         }
 
         public async Task<LeaveRequest?> UpdateLeaveRequestAsync(LeaveRequest leaveRequest)

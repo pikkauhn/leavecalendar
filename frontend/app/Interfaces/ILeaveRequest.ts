@@ -25,8 +25,7 @@ interface CreateLeaveRequestDto {
     userId: number;
     reason: string;
     startDate: Date;
-    endDate: Date;
-    status: LeaveStatus;
+    endDate: Date;    
     leaveType: LeaveType;
 }
 

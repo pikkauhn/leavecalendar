@@ -31,22 +31,33 @@ namespace api.Controllers
             return Ok(leaveRequest);
         }
         [HttpPost]
-        public async Task<ActionResult<LeaveRequestDto>> Create(LeaveRequestDto leaveRequestDto)
+        public async Task<ActionResult<LeaveRequestDto>> Create(CreateLeaveRequestDto createLeaveRequestDto)
         {
+            var leaveRequestDto = new LeaveRequestDto{
+                Id = 0,
+                UserId = createLeaveRequestDto.UserId,
+                Reason = createLeaveRequestDto.Reason,
+                StartDate = createLeaveRequestDto.StartDate,
+                EndDate = createLeaveRequestDto.EndDate,
+                LeaveType = createLeaveRequestDto.LeaveType,
+                Status = (int)LeaveStatus.Pending,
+                Comment = null,
+                ResponseByUserId = 0
+            };
             var createdLeaveRequest = await _leaveRequestService.CreateLeaveRequestAsync(leaveRequestDto);
             return CreatedAtAction("GetById", new { id = createdLeaveRequest.UserId }, createdLeaveRequest);
         }
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update(int id, int updatedByUserId, LeaveRequestDto updatedLeaveRequest)
+        public async Task<IActionResult> Update(int id, LeaveRequestDto updatedLeaveRequest)
         {
-            var existingLeaveRequest = await _leaveRequestService.UpdateLeaveRequestAsync(id, updatedByUserId, updatedLeaveRequest);
+            var existingLeaveRequest = await _leaveRequestService.UpdateLeaveRequestAsync(id, updatedLeaveRequest);
             if (existingLeaveRequest == null)
             {
                 return NotFound();
             }            
             return NoContent();
         }
-        [HttpDelete]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
             var success = await _leaveRequestService.DeleteLeaveRequestAsync(id);       

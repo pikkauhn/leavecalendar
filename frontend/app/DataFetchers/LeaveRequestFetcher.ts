@@ -55,7 +55,7 @@ export const deleteLeaveRequest = async (Id: number) => {
     const response = await axios.delete(`${baseUrl}/${Id}`);
     return response.data;
   } catch (error) {
-    console.error(`Error deleting leave request with Id ${Id}: `, error)
+    console.error(`Error deleting leave request with Id ${Id}: `, error);
     throw error;
   }
 };
@@ -66,7 +66,7 @@ export const updateLeaveRequest = async (
   leaveRequest: UpdateLeaveRequestDto
 ) => {
   try {
-    const response = await axios.put(`${baseUrl}/${Id}`);
+    const response = await axios.put(`${baseUrl}/${Id}`, leaveRequest);
     return response.data;
   } catch (error) {
     console.error(`Error updating leave request with Id ${Id}`, error);
