@@ -30,20 +30,6 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({ onRegistrationSucce
         { id: 8, name: 'WWTP' },
     ]
 
-    // useEffect(() => {
-    //     const fetchDepartents = async () => {
-    //         try {
-    //             const fetchedDepartments = await fetchAllDepartments();
-    //             console.log(fetchedDepartments);
-    //             setDepartments(fetchedDepartments);
-    //         } catch (error) {
-    //             console.error('Fetch Departments Error: ', error);
-    //         }
-    //     };
-
-    //     fetchDepartents();
-    // }, []);
-
     const handleSubmit = async () => {
         const departmentId = selectedDepartment?.id as number;
         const role = 1;

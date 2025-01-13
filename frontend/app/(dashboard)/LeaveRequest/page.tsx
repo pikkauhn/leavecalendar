@@ -51,11 +51,16 @@ export default function Page() {
   }
 
   const createUserRequest = async () => {
+    const longStartDate = new Date(startDate);
+    const longEndDate = new Date(endDate);
+    const formattedStartDate = longStartDate.toISOString();
+    const formattedEndDate = longEndDate.toISOString();
+
     const leaveRequest: CreateLeaveRequestDto = {
       userId: parseInt(userId),
       reason: reason,
-      startDate: new Date(startDate),
-      endDate: new Date(endDate),
+      startDate: formattedStartDate,
+      endDate: formattedEndDate,
       leaveType: parseInt(leaveType),
     };
     setItems(await createLeaveRequest(leaveRequest));

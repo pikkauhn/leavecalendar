@@ -1,4 +1,3 @@
-using api.Data;
 using api.Dtos.User;
 using api.Interfaces;
 using api.Models;
@@ -12,13 +11,11 @@ namespace api.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        private readonly ApplicationDBContext _context;
         private readonly IUserService _userService;
         private readonly IMapper _mapper;
-        public UserController(ApplicationDBContext context, IUserService userService, IMapper mapper)
+        public UserController(IUserService userService, IMapper mapper)
         {
             _userService = userService;
-            _context = context;
             _mapper = mapper;
 
         }
