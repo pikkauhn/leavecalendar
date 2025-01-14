@@ -9,11 +9,11 @@ namespace api.Data
         {
         }
 
-        public DbSet<User> Users { get; set; }
-        public DbSet<LeaveRequest> LeaveRequests { get; set; }
-        public DbSet<Department> Departments { get; set; }        
-        public DbSet<InvitationCode> InvitationCodes { get; set; }
-        public DbSet<LeaveBalance> LeaveBalances { get; set; }
+        public required DbSet<User> Users { get; set; }
+        public required DbSet<LeaveRequest> LeaveRequests { get; set; }
+        public required DbSet<Department> Departments { get; set; }        
+        public required DbSet<InvitationCode> InvitationCodes { get; set; }
+        public required DbSet<LeaveBalance> LeaveBalances { get; set; }
 
     }
 }

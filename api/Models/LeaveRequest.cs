@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace api.Models
 {
     public enum LeaveStatus 
@@ -14,8 +16,9 @@ namespace api.Models
     
     public class LeaveRequest
     {
-        public int Id { get; set; }
-        public required int UserId { get; set; }
+        [Key]
+        public int idLeaveRequest { get; set; }
+        public required int userLeaveRequest { get; set; }
         public required string Reason { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }

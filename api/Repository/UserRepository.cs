@@ -67,7 +67,7 @@ namespace api.Repository
         {
             try
             {
-                return await _context.Users.FirstOrDefaultAsync(u => u.Id == id);
+                return await _context.Users.FirstOrDefaultAsync(u => u.idUser == id);
             }
             catch (Exception ex)
             {
@@ -91,7 +91,7 @@ namespace api.Repository
         {
             try
             {
-                var existingUser = await _context.Users.FirstOrDefaultAsync(u => u.Id == user.Id);
+                var existingUser = await _context.Users.FirstOrDefaultAsync(u => u.idUser == user.idUser);
                 if (existingUser == null)
                 {
                     return null;
@@ -102,7 +102,7 @@ namespace api.Repository
             }
             catch (Exception ex)
             {
-                throw new Exception($"An error occurred while updating user with id: {user.Id}", ex);
+                throw new Exception($"An error occurred while updating user with id: {user.idUser}", ex);
             }
         }
     }

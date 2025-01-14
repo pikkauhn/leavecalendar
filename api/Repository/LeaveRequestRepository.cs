@@ -80,13 +80,13 @@ namespace api.Repository
         {
             try
             {
-                var existingUser = await _context.Users.FirstOrDefaultAsync(u => u.Id == userId);
+                var existingUser = await _context.Users.FirstOrDefaultAsync(u => u.idUser == userId);
                 if (existingUser == null)
                 {
                     return null;
                 }
                 var leaveRequests = await _context.LeaveRequests
-                                                    .Where(lr => lr.UserId == userId)
+                                                    .Where(lr => lr.userLeaveRequest == userId)
                                                     .ToListAsync();
 
                 return leaveRequests;
@@ -102,7 +102,7 @@ namespace api.Repository
         {
             try
             {
-                var existingLeaveRequest = await _context.LeaveRequests.FindAsync(leaveRequest.Id);
+                var existingLeaveRequest = await _context.LeaveRequests.FindAsync(leaveRequest.idLeaveRequest);
                 if (existingLeaveRequest == null)
                 {
                     return null;
@@ -113,7 +113,7 @@ namespace api.Repository
             }
             catch (Exception ex)
             {
-                throw new Exception($"An error occurred while updating a leave request with id: {leaveRequest.Id}", ex);
+                throw new Exception($"An error occurred while updating a leave request with id: {leaveRequest.idLeaveRequest}", ex);
             }
         }
     }

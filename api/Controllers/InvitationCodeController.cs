@@ -37,7 +37,7 @@ namespace api.Controllers
         public async Task<ActionResult<InvitationCodeDto>> CreateInvitationCode(InvitationCode invitationCode)
         {
             var createdInvitationCode = await _invitationCodeService.CreateInvitationCodeAsync(invitationCode);
-            return CreatedAtAction("GetById", new { id = createdInvitationCode.Id}, createdInvitationCode);
+            return CreatedAtAction("GetById", new { id = createdInvitationCode.idInvitationCode}, createdInvitationCode);
         }
 
         [HttpPut("{id}")]

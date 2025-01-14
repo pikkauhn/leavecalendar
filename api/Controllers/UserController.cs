@@ -55,7 +55,7 @@ namespace api.Controllers
             var user = _mapper.Map<User>(userDto);
             user.Password = PasswordHasher.HashPassword(userDto.Password);
             await _userService.CreateUserAsync(user);
-            return CreatedAtAction(nameof(GetById), new { id = user.Id }, user);
+            return CreatedAtAction(nameof(GetById), new { id = user.idUser }, user);
         }
 
         [HttpPut]

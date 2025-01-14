@@ -46,7 +46,7 @@ namespace api.Controllers
             }
 
             await _departmentService.CreateDepartmentAsync(department);
-            return CreatedAtAction(nameof(GetById), new { id = department.Id }, department);
+            return CreatedAtAction(nameof(GetById), new { id = department.idDepartment }, department);
         }
 
         [HttpPut]

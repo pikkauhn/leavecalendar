@@ -1,8 +1,11 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace api.Models
 {
     public class LeaveBalance
     {
-        public int Id { get; set; }
+        [Key]
+        public int idLeaveBalance { get; set; }
         public int UserId { get; set; }
         public int LeaveTypeId { get; set; }
         public int AvailableDays { get; set; }

@@ -90,7 +90,7 @@ namespace api.Repository
             try
             {
             var existingInvitationCode = await _context.InvitationCodes
-                .FirstOrDefaultAsync(ic => ic.Id == id);
+                .FirstOrDefaultAsync(ic => ic.idInvitationCode == id);
 
             if (existingInvitationCode == null)
             {
