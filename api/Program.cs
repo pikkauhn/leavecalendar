@@ -2,6 +2,7 @@ using api.Data;
 using api.Interfaces;
 using api.Mappers;
 using api.Repository;
+using api.Security.ApiKey;
 using api.Services;
 using Microsoft.EntityFrameworkCore;
 using MySqlConnector;
@@ -67,7 +68,8 @@ public class Program
         }
 
         // app.UseHttpsRedirection();
-
+        app.UseMiddleware<ApiKeyMiddleware>();
+        
         app.UseCors("MyCorsPolicy");
 
         app.UseRouting();
