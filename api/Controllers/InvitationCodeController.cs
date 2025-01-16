@@ -5,8 +5,8 @@ using api.Models;
 
 namespace api.Controllers
 {
-        [Route("api/[controller]")]
-        [ApiController]
+    [Route("api/[controller]")]
+    [ApiController]
     public class InvitationCodeController : ControllerBase
     {
         private readonly IInvitationCodeService _invitationCodeService;
@@ -22,10 +22,10 @@ namespace api.Controllers
             var invitationCodes = await _invitationCodeService.GetAllInvitationCodesAsync();
             return Ok(invitationCodes);
         }
-        [HttpGet("{id}")]
-        public async Task<ActionResult<InvitationCodeDto>> GetById(int id)
+        [HttpGet("/api/[controller]/auth/{code}")]
+        public async Task<ActionResult<InvitationCodeDto>> GetByCode(string code)
         {
-            var invitationCode = await _invitationCodeService.GetInvitationCodeByIdAsync(id);
+            var invitationCode = await _invitationCodeService.GetInvitationCodeByCodeAsync(code);
             if (invitationCode == null)
             {
                 return NotFound();
@@ -37,17 +37,17 @@ namespace api.Controllers
         public async Task<ActionResult<InvitationCodeDto>> CreateInvitationCode(InvitationCode invitationCode)
         {
             var createdInvitationCode = await _invitationCodeService.CreateInvitationCodeAsync(invitationCode);
-            return CreatedAtAction("GetById", new { id = createdInvitationCode.idInvitationCode}, createdInvitationCode);
+            return CreatedAtAction("GetById", new { id = createdInvitationCode.idInvitationCode }, createdInvitationCode);
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update(int id, [FromBody] InvitationCodeDto invitationCodeDto)
+        public async Task<IActionResult> Update(int id, [FromBody] InvitationCodeChangeDto invitationCodeChangeDto)
         {
-            if (id != invitationCodeDto.Id)
+            if (id != invitationCodeChangeDto.Id)
             {
                 return BadRequest();
             }
-            var updatedInvitationCode = await _invitationCodeService.UpdateInvitationCodeAsync(id, invitationCodeDto);
+            var updatedInvitationCode = await _invitationCodeService.UpdateInvitationCodeAsync(id, invitationCodeChangeDto);
             if (updatedInvitationCode == null)
             {
                 return NotFound();

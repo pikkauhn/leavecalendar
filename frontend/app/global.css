@@ -1,0 +1,11 @@
+.registerPageInput {
+    margin-bottom: 5px;
+    border-color: black;
+    border-radius: 5;
+}
+
+.registerPageDrop {
+    margin-bottom: 10px;
+    border-color: black;
+    border-radius: 5;
+}

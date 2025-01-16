@@ -85,7 +85,7 @@ namespace api.Repository
             }
         }
 
-        public async Task<InvitationCode?> UpdateInvitationCodeAsync(int id, InvitationCodeDto invitationCodeDto)
+        public async Task<InvitationCode?> UpdateInvitationCodeAsync(int id, InvitationCodeChangeDto invitationCodeChangeDto)
         {
             try
             {
@@ -97,7 +97,7 @@ namespace api.Repository
                 return null;
             }
 
-            _context.Entry(existingInvitationCode).CurrentValues.SetValues(invitationCodeDto);
+            _context.Entry(existingInvitationCode).CurrentValues.SetValues(invitationCodeChangeDto);
             await _context.SaveChangesAsync();
             return existingInvitationCode;
             }

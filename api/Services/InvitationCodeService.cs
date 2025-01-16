@@ -46,17 +46,7 @@ namespace api.Services
             return _mapper.Map<InvitationCodeDto>(invitationCode);
         }
 
-        public async Task<InvitationCodeDto?> GetInvitationCodeByIdAsync(int id)
-        {
-            var invitationCode = await _invitationCodeRepository.GetInvitationCodeByIdAsync(id);
-            if (invitationCode == null)
-            {
-                return null;
-            }
-            return _mapper.Map<InvitationCodeDto>(invitationCode);
-        }
-
-        public async Task<InvitationCodeDto?> UpdateInvitationCodeAsync(int id, InvitationCodeDto invitationCodeDto)
+        public async Task<InvitationCodeDto?> UpdateInvitationCodeAsync(int id, InvitationCodeChangeDto invitationCodeChangeDto)
         {
             var invitationCode = await _invitationCodeRepository.GetInvitationCodeByIdAsync(id);
             if (invitationCode == null)
@@ -64,7 +54,7 @@ namespace api.Services
                 return null;
             }
 
-            var updatedInvitationCode = await _invitationCodeRepository.UpdateInvitationCodeAsync(id, invitationCodeDto);
+            var updatedInvitationCode = await _invitationCodeRepository.UpdateInvitationCodeAsync(id, invitationCodeChangeDto);
             return _mapper.Map<InvitationCodeDto>(updatedInvitationCode);
         }
     }

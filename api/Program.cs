@@ -11,7 +11,7 @@ public class Program
 {
     public static void Main(string[] args)
     {
-        var builder = WebApplication.CreateBuilder(args);
+        var builder = WebApplication.CreateBuilder(args);        
         var configuration = builder.Configuration;
         var connectionString = configuration.GetConnectionString("defaultConnection");
         if (string.IsNullOrEmpty(connectionString))
@@ -30,7 +30,11 @@ public class Program
         });
 
         // Add Swagger
-        builder.Services.AddSwaggerGen();
+        builder.Services.AddSwaggerGen(c =>
+        {
+            c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo { Title = "Global header", Version = "v1"});
+            c.OperationFilter<CustomHeaderParameter>();
+        });
         builder.Services.AddMvcCore().AddApiExplorer();
 
         // Configure Cors

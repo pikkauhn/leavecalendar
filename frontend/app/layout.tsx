@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "primereact/resources/themes/lara-dark-blue/theme.css";
 import 'primeicons/primeicons.css';
-
+import './global.css'
 import Navbar from "./Components/Navbar";
 
 const inter = Inter({ subsets: ["latin"] });

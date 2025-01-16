@@ -5,8 +5,8 @@ import { InputText } from 'primereact/inputtext';
 import { Dropdown } from 'primereact/dropdown';
 import { Button } from 'primereact/button';
 
-// import { fetchAllDepartments } from '../DataFetchers/DepartmentFetcher';
 import { createUser } from '../DataFetchers/UserFetcher';
+import { AuthenticateCode } from '../DataFetchers/InvitationCodeFetcher';
 
 interface RegistrationFormProps {
     onRegistrationSuccess: () => void;
@@ -18,6 +18,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({ onRegistrationSucce
     const [password, setPassword] = useState('');
     const [verifyPassword, setVerifyPassword] = useState('');
     const [name, setName] = useState('');
+    const [invitationCode, setInvitationCode] = useState('');
     const [selectedDepartment, setSelectedDepartment] = useState<Department>();
     const departments = [
         { id: 1, name: 'ADM' },
@@ -46,10 +47,13 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({ onRegistrationSucce
                 role,
                 departmentId,
             };
-
-            const createdUser = await createUser(newUser);
-            if (createdUser) {
-                onRegistrationSuccess();
+            const invited = await AuthenticateCode(invitationCode);
+            if (invited) {
+                const createdUser = await createUser(newUser);
+                if (createdUser) {
+                    onRegistrationSuccess();
+                    
+                }
             }
 
         } catch (error) {
@@ -63,10 +67,11 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({ onRegistrationSucce
 
     return (
         <div className="registration-form">
-            <Panel header="Registration" style={{ width: '300px', margin: 'auto' }}>
+            <Panel style={{ width: '300px', margin: 'auto', marginTop: '10px' }} header="New User Registration">
                 <form id="registrationForm" onSubmit={handleSubmit}>
                     <div className="p-fluid">
                         <InputText
+                            className='registerPageInput'
                             id="username"
                             name="username"
                             required
@@ -75,6 +80,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({ onRegistrationSucce
                             placeholder="Username"
                         />
                         <InputText
+                            className='registerPageInput'
                             id="email"
                             type="email"
                             name="email"
@@ -84,6 +90,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({ onRegistrationSucce
                             placeholder="Email Address"
                         />
                         <InputText
+                            className='registerPageInput'
                             id="password"
                             type="password"
                             name="password"
@@ -93,6 +100,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({ onRegistrationSucce
                             placeholder="Password"
                         />
                         <InputText
+                            className='registerPageInput'
                             id="verifyPassword"
                             type="password"
                             name="verifyPassword"
@@ -102,6 +110,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({ onRegistrationSucce
                             placeholder="Verify Password"
                         />
                         <InputText
+                            className='registerPageInput'
                             id="name"
                             name="name"
                             required
@@ -109,7 +118,17 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({ onRegistrationSucce
                             onChange={(e) => setName(e.target.value)}
                             placeholder="Full Name"
                         />
+                        <InputText
+                            className='registerPageInput'
+                            id='InvitationCode'
+                            name="InvitationCode"
+                            required
+                            value={invitationCode}
+                            onChange={(e) => setInvitationCode(e.target.value)}
+                            placeholder="Invitation Code"
+                        />
                         <Dropdown
+                            className='registerPageDrop'
                             id="departments"
                             name="departments"
                             required

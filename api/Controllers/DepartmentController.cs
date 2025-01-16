@@ -24,7 +24,6 @@ namespace api.Controllers
             return Ok(departments);
         }
 
-
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
