@@ -1,11 +1,13 @@
 'use server'
 import axios from 'axios';
+import createApiClient from './api/apiClient';
 
 const baseUrl = 'http://localhost:5031/api/department';
+const apiClient = createApiClient({baseURL: baseUrl});
 
 export const fetchAllDepartments = async (): Promise<Department[]> => {
     try {
-      const response = await axios.get(baseUrl);
+      const response = await apiClient.get(baseUrl);
       return response.data;
     } catch (error) {
       console.error('Fetch All Departments Error:', error);
@@ -15,7 +17,7 @@ export const fetchAllDepartments = async (): Promise<Department[]> => {
 
 export const fetchDepartmentById = async (id: number): Promise<Department | null> => {
     try {
-      const response = await axios.get(`${baseUrl}/${id}`);
+      const response = await apiClient.get(`${baseUrl}/${id}`);
       return response.data;
     } catch (error) {
       console.error('Fetch Department By ID Error:', error);
@@ -25,7 +27,7 @@ export const fetchDepartmentById = async (id: number): Promise<Department | null
 
   export const fetchDepartmentByName = async (name: string): Promise<Department | null> => {
     try {
-      const response = await axios.get(`${baseUrl}/name/${name}`);
+      const response = await apiClient.get(`${baseUrl}/name/${name}`);
       return response.data;
     } catch (error) {
       console.error('Fetch Department By Name Error:', error);
@@ -35,7 +37,7 @@ export const fetchDepartmentById = async (id: number): Promise<Department | null
   
   export const createDepartment = async (department: Department): Promise<Department> => {
     try {
-      const response = await axios.post(baseUrl, department);
+      const response = await apiClient.post(baseUrl, department);
       return response.data;
     } catch (error) {
       console.error('Create Department Error:', error);
@@ -45,7 +47,7 @@ export const fetchDepartmentById = async (id: number): Promise<Department | null
   
   export const updateDepartment = async (id: number, department: Department): Promise<Department | null> => {
     try {
-      const response = await axios.put(`${baseUrl}/${id}`, department);
+      const response = await apiClient.put(`${baseUrl}/${id}`, department);
       return response.data;
     } catch (error) {
       console.error('Update Department Error:', error);
@@ -55,7 +57,7 @@ export const fetchDepartmentById = async (id: number): Promise<Department | null
   
   export const deleteDepartment = async (id: number): Promise<Department | null> => {
     try {
-      const response = await axios.delete(`${baseUrl}/${id}`);
+      const response = await apiClient.delete(`${baseUrl}/${id}`);
       return response.data;
     } catch (error) {
       console.error('Delete Department Error:', error);

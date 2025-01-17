@@ -1,12 +1,14 @@
 'use server'
 import axios from 'axios';
 
-const baseUrl = 'http://localhost:5031/api/user';
+import createApiClient from './api/apiClient';
 
+const baseUrl = 'http://localhost:5031/api/user';
+const apiClient = createApiClient({baseURL: baseUrl});
 // Fetch all users
 export const fetchAllUsers = async () => {
     try {
-        const response = await axios.get(`${baseUrl}`);
+        const response = await apiClient.get(`${baseUrl}`);
         return response.data;
     } catch (error) {
         console.error('Fetch Users Error: ', error);
@@ -17,7 +19,7 @@ export const fetchAllUsers = async () => {
 // Fetch user by ID
 export const fetchUserById = async (Id: number) => {
     try {
-        const response = await axios.get(`${baseUrl}/${Id}`);
+        const response = await apiClient.get(`${baseUrl}/${Id}`);
         return response.data;
     } catch (error) {
         console.error('Fetch User By Id Error: ', error);
@@ -28,7 +30,7 @@ export const fetchUserById = async (Id: number) => {
 // Fetch user by username
 export const fetchUserByUsername = async (username: string) => {
     try {
-        const response = await axios.get(`${baseUrl}/username/${username}`);
+        const response = await apiClient.get(`${baseUrl}/username/${username}`);
         return response.data;
     } catch (error) {
         console.error('Fetch User By Id Error: ', error);
@@ -42,7 +44,7 @@ export const createUser = async (user: CreateUserDto) => {
         if (user.role != 1) {
             user.role = 1;
         }
-        const response = await axios.post(`${baseUrl}`, user);
+        const response = await apiClient.post(`${baseUrl}`, user);
         return response.data;
     } catch (error) {
         console.error('Create User Error: ', error);
@@ -53,7 +55,7 @@ export const createUser = async (user: CreateUserDto) => {
 // Update user
 export const updateUser = async (Id: number, userDto: UpdateUserDto) => {
     try {
-        const response = await axios.put(`${baseUrl}/${Id}`, userDto);
+        const response = await apiClient.put(`${baseUrl}/${Id}`, userDto);
         return response.data;
     } catch (error) {
         console.error('Update User Error: ', error)
@@ -64,7 +66,7 @@ export const updateUser = async (Id: number, userDto: UpdateUserDto) => {
 // Delete user
 export const deleteUser = async (id: number) => {
     try {
-        const response = await axios.delete(`${baseUrl}/${id}`);
+        const response = await apiClient.delete(`${baseUrl}/${id}`);
         return response.data;
     } catch (error) {
         console.error('Delete User Error: ', error);
@@ -74,7 +76,7 @@ export const deleteUser = async (id: number) => {
 
 export const verifyPassword = async (user: VerifyPassword) => {
     try {
-        const response = await axios.post(`${baseUrl}/Verify`, user);
+        const response = await apiClient.post(`${baseUrl}/Verify`, user);
         return response.data;
     } catch (error) {
         console.error('Password Verification Error: ', error);
