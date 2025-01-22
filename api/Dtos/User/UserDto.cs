@@ -8,7 +8,7 @@ namespace api.Dtos.User
         public required string Username { get; set; }
         public required string Name { get; set; }
         public required int Role { get; set; }
-        public int DepartmentId { get; set; }
+        public int idDepartment { get; set; }
     }
     public class UpdateUserRequestDto
     {
@@ -18,15 +18,16 @@ namespace api.Dtos.User
         public string? Password { get; set; }
         public string? Name { get; set; }
         public int Role { get; set; }
-        public int? DepartmentId { get; set; }
+        public int? idDepartment { get; set; }
     }
     public class CreateUserRequestDto
     {
-        public required string Email { get; set; }
-        public required string Username { get; set; }
-        public required string Password { get; set; }
-        public required string Name { get; set; }
-        public int DepartmentId { get; set; }
+        public string? Email { get; set; }
+        public string? Username { get; set; }
+        public string? Password { get; set; }
+        public string? Name { get; set; }
+        public int Role { get; set; }
+        public int? idDepartment { get; set; }
     }
     public class VerifyUserPassword
     {

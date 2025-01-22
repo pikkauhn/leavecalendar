@@ -8,7 +8,7 @@ const apiClient = createApiClient({baseURL: baseUrl});
 // Fetch all users
 export const fetchAllUsers = async () => {
     try {
-        const response = await apiClient.get(`${baseUrl}`);
+        const response = await apiClient.get(baseUrl);
         return response.data;
     } catch (error) {
         console.error('Fetch Users Error: ', error);

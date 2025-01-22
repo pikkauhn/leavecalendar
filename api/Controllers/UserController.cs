@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using api.Dtos.User;
 using api.Interfaces;
 using api.Models;
@@ -34,7 +35,7 @@ namespace api.Controllers
         public async Task<IActionResult> GetById([FromRoute] int id)
         {
             var user = await _userService.GetUserByIdAsync(id);
-            
+
             if (user == null)
             {
                 return NotFound();
@@ -46,16 +47,20 @@ namespace api.Controllers
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] CreateUserRequestDto userDto)
         {
-            var existingUser = await _userService.GetUserByUsernameAsync(userDto.Username);
-            if (existingUser != null)
+            if (userDto.Username != null && userDto.Password != null)
             {
-                return BadRequest("User already exists.");
+                var existingUser = await _userService.GetUserByUsernameAsync(userDto.Username);
+                if (existingUser != null)
+                {
+                    return BadRequest("User already exists.");
+                }
+                var user = _mapper.Map<User>(userDto);
+                user.Password = PasswordHasher.HashPassword(userDto.Password);
+                await _userService.CreateUserAsync(user);
+                Debug.Write($"user: {user}");
+                return CreatedAtAction(nameof(GetById), new { id = user.idUser }, user);
             }
-
-            var user = _mapper.Map<User>(userDto);
-            user.Password = PasswordHasher.HashPassword(userDto.Password);
-            await _userService.CreateUserAsync(user);
-            return CreatedAtAction(nameof(GetById), new { id = user.idUser }, user);
+            return BadRequest("Required Fields Null");
         }
 
         [HttpPut]
@@ -87,7 +92,7 @@ namespace api.Controllers
 
         [HttpGet]
         [Route("username/{username}")]
-        public async Task<IActionResult> GetUserByUsername( string username )
+        public async Task<IActionResult> GetUserByUsername(string username)
         {
             var existingUser = await _userService.GetUserByUsernameAsync(username);
             if (existingUser == null)

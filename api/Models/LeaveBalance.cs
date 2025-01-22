@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace api.Models
 {
@@ -6,7 +7,8 @@ namespace api.Models
     {
         [Key]
         public int idLeaveBalance { get; set; }
-        public int UserId { get; set; }
+        [ForeignKey("idUser")]
+        public int idUser { get; set; }
         public int LeaveTypeId { get; set; }
         public int AvailableDays { get; set; }
         public int AccruedDays { get; set; }

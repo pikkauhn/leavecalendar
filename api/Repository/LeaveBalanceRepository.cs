@@ -67,7 +67,7 @@ namespace api.Repository
             try
             {
                 return await _context.LeaveBalances
-                .Where(lb => lb.UserId == userId)
+                .Where(lb => lb.idUser == userId)
                 .ToListAsync();
             }
             catch (Exception ex)
